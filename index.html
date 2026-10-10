@@ -429,6 +429,56 @@ footer a:hover{color:var(--jc-lime)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
 }
 
+
+/* JIMMY'S COFFEE BRAND ART DIRECTION — grounded in the café's real-world feel */
+:root{
+  --cream:#F3EBDD !important; --paper:#E8DCC8 !important; --ink:#29231D !important;
+  --yellow:#D6A24A !important; --brick:#8D382D !important; --brown:#5B4030 !important;
+  --line:rgba(41,35,29,.18) !important;
+}
+body{background:var(--cream);color:var(--ink)}
+header.site{background:rgba(243,235,221,.96);backdrop-filter:blur(10px)}
+.brand,.foot-brand{letter-spacing:-.045em}
+.brand::before,.foot-brand::before{content:"";display:inline-block;width:.48em;height:.48em;border:1.5px solid var(--brick);border-radius:50%;margin-right:.35em;vertical-align:.03em;box-shadow:inset 0 0 0 2px var(--cream),inset 0 0 0 3px var(--brick)}
+.cta,.geo-btn,.loc-actions .reserve-btn{background:var(--brick);border-color:var(--brick);color:#fff8ed}
+.cta.outline,.loc-actions .dir-btn{background:transparent;color:var(--ink);border-color:var(--ink)}
+.hero{min-height:min(82vh,820px);background:#30251d}
+.hero::after{height:58%;background:linear-gradient(0deg,rgba(24,18,13,.82),rgba(24,18,13,.05) 80%)}
+.hero img,.hero video{filter:brightness(.68) saturate(.78)}
+.hero-inner{padding:clamp(2.5rem,7vw,5.5rem) 0}
+.hero h1{max-width:10ch;font-size:clamp(3.2rem,8vw,7rem);line-height:.9;letter-spacing:-.055em;text-wrap:balance}
+.hero p{max-width:34ch;font-size:clamp(1rem,1.4vw,1.2rem)}
+.hero .cta{background:#E4B968;color:#2a2118;border-color:#E4B968}
+.story,.locations,.store,.events,.contact,.tl{background:var(--cream)}
+.jimmy,.coffee,.faq-sec{background:var(--paper)}
+.story,.jimmy,.locations,.coffee,.store,.events,.faq-sec,.contact,.reserve,.tl{padding-block:clamp(3.5rem,7vw,6.5rem)}
+.eyebrow{color:var(--brick);letter-spacing:.13em;text-transform:uppercase;font-size:.72rem}
+.story h2,.jimmy h2,.sec-head h2,.tl h2{letter-spacing:-.045em;line-height:1.02}
+.story blockquote{border-color:var(--brick)}
+.jimmy img,.loc-photo img,.feed-tile,.bean img,.prod .swatch,.ev-hero,.rsv-box{border-radius:2px}
+.feed-grid{gap:1rem}
+.feed-tile{border-radius:2px}
+.feed-cap{opacity:1;padding:1.8rem .75rem .65rem}
+.loc{gap:1.8rem}
+.loc-photo img{border-radius:2px}
+.loc .tag{border-radius:2px;text-transform:uppercase;letter-spacing:.06em;font-size:.68rem}
+.map-wrap{border-radius:2px;background:var(--paper)}
+.swipe-track{border-radius:2px;box-shadow:0 12px 28px -20px rgba(41,35,29,.5)}
+.swipe-card{background:var(--paper)}
+.prod .swatch,.ev-hero,.tier,.rsv-box{border-radius:2px}
+.gift{background:#30251d;color:#F3EBDD}
+.gift .cta{background:#E4B968;color:#2a2118;border-color:#E4B968}
+.ev-hero{border-left:4px solid var(--brick)}
+.rsv-steps span.active{background:var(--brick)}
+.rsv-box{box-shadow:0 18px 50px rgba(41,35,29,.07)}
+footer{background:var(--paper)}
+a,button{transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s ease}
+.cta:hover,.geo-btn:hover{transform:translateY(-1px)}
+.jc-progress{height:2px !important;background:transparent !important}
+.jc-progress span{background:var(--brick) !important}
+@media(max-width:600px){.hero{min-height:78svh}.hero h1{max-width:9ch}.feed-grid{gap:.55rem}.sec-head{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+
 </style>
 </head>
 <body>
