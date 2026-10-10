@@ -1,0 +1,48 @@
+name: Restore Jimmy's Coffee media assets
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/restore-media.yml
+
+permissions:
+  contents: write
+
+jobs:
+  restore-media:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website repository
+        uses: actions/checkout@v4
+
+      - name: Download original site archive
+        run: |
+          curl --fail --location --retry 3 --output /tmp/jimmys-coffee-site.zip "https://d2ol7oe51mr4n9.cloudfront.net/user_3IM2hxR4tHWiAzmS1kFJ5Tws7Py/8f84475c-d540-496f-a0cc-b5321f964f7b.zip"
+          unzip -t /tmp/jimmys-coffee-site.zip
+
+      - name: Restore images and videos at the paths used by index.html
+        run: |
+          mkdir -p images videos
+          unzip -q /tmp/jimmys-coffee-site.zip -d /tmp/jimmys-site
+          test -d /tmp/jimmys-site/jimmys-coffee-site/images
+          test -d /tmp/jimmys-site/jimmys-coffee-site/videos
+          cp -a /tmp/jimmys-site/jimmys-coffee-site/images/. images/
+          cp -a /tmp/jimmys-site/jimmys-coffee-site/videos/. videos/
+          test -s images/hero.jpg
+          test -s videos/hero.mp4
+          echo "Restored $(find images -type f | wc -l) images and $(find videos -type f | wc -l) videos."
+
+      - name: Commit restored media assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images videos
+          if git diff --cached --quiet; then
+            echo "Media assets are already present."
+            exit 0
+          fi
+          git commit -m "Restore Jimmy's Coffee images and videos"
+          git push
