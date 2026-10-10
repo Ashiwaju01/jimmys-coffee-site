@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jimmy's Coffee — Toronto's Neighbourhood Coffee Shop</title>
+<meta name="description" content="Jimmy's Coffee — eight neighbourhood cafés across Toronto since 2009. Locally roasted coffee, catering, gift cards, and a place to sit a while.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+<meta property="og:title" content="Jimmy's Coffee — Toronto's Neighbourhood Coffee Shop">
+<meta property="og:description" content="Eight cafés across Toronto since 2009. Find a location, see the menu, or reserve a table.">
+<meta property="og:image" content="images/hero.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#221B12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F4ECDD; --paper:#FBF6EC; --ink:#221B12; --yellow:#F0B429; --brick:#B23B2E;
+  --brown:#6B4A31; --line:rgba(34,27,18,.16);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--cream:#1B1712; --paper:#211B14; --ink:#F4ECDD; --line:rgba(244,236,221,.18)}
+}
+:root[data-theme="dark"]{--cream:#1B1712; --paper:#211B14; --ink:#F4ECDD; --line:rgba(244,236,221,.18)}
+html{scroll-padding-top:76px}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"Work Sans",sans-serif;line-height:1.55}
+h1,h2,h3,.display{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-.02em}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--brick);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 1.5rem}
+section{scroll-margin-top:76px}
+
+/* NAV */
+header.site{position:sticky;top:0;z-index:50;background:var(--cream);border-bottom:1px solid var(--line);transition:box-shadow .25s ease}
+header.site.scrolled{box-shadow:0 4px 18px rgba(0,0,0,.08)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+.brand{font-family:"Fraunces",serif;font-weight:700;font-size:1.3rem;text-decoration:none;letter-spacing:-.01em}
+.navlinks{display:flex;gap:1.7rem;list-style:none;margin:0;padding:0;align-items:center}
+.navlinks a{text-decoration:none;font-size:.95rem;font-weight:500}
+.navlinks a:hover{color:var(--brick)}
+.cta{background:var(--ink);color:var(--paper);padding:.75rem 1.3rem;border-radius:3px;font-weight:600;text-decoration:none;font-size:.92rem;border:1px solid var(--ink);display:inline-flex;align-items:center;min-height:44px;touch-action:manipulation}
+.cta.outline{background:transparent;color:var(--ink)}
+.navright{display:flex;gap:.8rem;align-items:center}
+.burger{display:none;background:none;border:0;font-size:1.5rem;cursor:pointer;color:var(--ink);width:44px;height:44px;align-items:center;justify-content:center}
+.mobile-panel{display:none;position:fixed;inset:0;background:var(--cream);z-index:60;padding:1.5rem;flex-direction:column}
+.mobile-panel.open{display:flex}
+.mobile-panel ul{list-style:none;padding:0;margin:2rem 0;display:flex;flex-direction:column;gap:1.4rem;font-family:"Fraunces",serif;font-size:1.6rem}
+.mobile-panel a{text-decoration:none}
+.mobile-close{align-self:flex-end;background:none;border:0;font-size:1.8rem;cursor:pointer}
+@media (max-width:880px){
+  .navlinks{display:none}
+  .burger{display:flex}
+  .navright .cta.outline{display:none}
+}
+
+/* HERO */
+.hero{position:relative;min-height:86vh;max-height:900px;display:flex;align-items:flex-end;overflow:hidden}
+@media (max-width:600px) and (max-height:700px){.hero{min-height:100svh}}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.55));pointer-events:none}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+.hero-inner{position:relative;color:#F4ECDD;padding:3.5rem 0 4rem;width:100%}
+.hero h1{font-size:clamp(2.6rem,7vw,5.2rem);line-height:.98;margin:0 0 1rem;color:#fff}
+.hero p{max-width:38ch;font-size:1.2rem;margin:0 0 1.8rem;color:#f1e9d8}
+.hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap}
+.hero .cta{background:var(--yellow);color:#201804;border-color:var(--yellow)}
+.hero .cta.outline{background:transparent;color:#fff;border-color:#fff}
+
+/* STORY */
+.story{padding:5rem 0;border-bottom:1px solid var(--line)}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.eyebrow{font-weight:600;color:var(--brick);margin:0 0 .6rem;font-size:.95rem}
+.story h2{font-size:clamp(2rem,4vw,2.9rem);margin:0 0 1.1rem}
+.story p{font-size:1.08rem;max-width:52ch}
+.story blockquote{margin:1.4rem 0 0;font-family:"Fraunces",serif;font-style:italic;font-size:1.3rem;border-left:3px solid var(--yellow);padding-left:1rem}
+
+/* JIMMY SECTION */
+.jimmy{padding:5rem 0;background:var(--paper);border-bottom:1px solid var(--line)}
+.jimmy-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:center}
+.jimmy img{border-radius:3px}
+.jimmy h2{font-size:clamp(2rem,4vw,2.8rem);margin:0 0 1rem}
+.jimmy p{font-size:1.06rem;max-width:56ch;margin:0 0 1rem}
+.names{font-family:"Fraunces",serif;font-style:italic;color:var(--brick);font-size:1.05rem}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:2.2rem;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(2rem,4.5vw,3rem);margin:0}
+.sec-head p{max-width:46ch;margin:.4rem 0 0;font-size:1.02rem}
+
+/* LOCATIONS */
+.locations{padding:5rem 0;border-bottom:1px solid var(--line)}
+
+.feed-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem}
+.feed-tile{position:relative;aspect-ratio:1;border-radius:6px;overflow:hidden;background:var(--cream)}
+.feed-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.feed-tile:hover img{transform:scale(1.06)}
+.feed-cap{position:absolute;left:0;right:0;bottom:0;padding:.6rem .7rem .5rem;font-size:.76rem;font-weight:600;color:#fff;background:linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0));opacity:0;transition:opacity .25s}
+.feed-tile:hover .feed-cap,.feed-tile:focus-within .feed-cap{opacity:1}
+@media (max-width:760px){.feed-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* Neighbourhood map */
+.map-wrap{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:1.2rem;margin-bottom:1.8rem}
+.map-svg{width:100%;height:auto;display:block;touch-action:manipulation}
+.map-street{stroke:var(--line);stroke-width:1.6;fill:none}
+.map-pin{cursor:pointer}
+.map-pin circle.halo{r:13}
+@media (pointer:coarse){.map-pin circle.halo{r:16}}
+.map-pin circle.halo{fill:var(--yellow);opacity:0;transition:opacity .2s}
+.map-pin:hover circle.halo,.map-pin:focus circle.halo,.map-pin.active circle.halo{opacity:.35}
+.map-pin .lidshape{color:var(--ink)}
+.map-pin.active .lidshape{color:var(--brick)}
+.map-pin text{font-family:"Work Sans",sans-serif;font-size:6.5px;fill:var(--ink);font-weight:600;pointer-events:none}
+.map-controls{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem}
+.geo-btn{background:var(--ink);color:var(--paper);border:0;padding:.7rem 1.1rem;border-radius:3px;font-weight:600;font-size:.9rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:.4rem;min-height:44px;touch-action:manipulation}
+.geo-btn:disabled{opacity:.6;cursor:wait}
+.geo-status{font-size:.85rem;opacity:.75}
+.sort-note{font-size:.8rem;opacity:.7}
+.dist-badge{font-size:.72rem;font-weight:700;color:var(--brick);margin-left:.5rem}
+.dist-badge:not(:empty)::before{content:"📍 "}
+.loc-list{display:flex;flex-direction:column}
+.loc{display:grid;grid-template-columns:180px 1fr auto;gap:1.6rem;align-items:start;padding:1.5rem 0;border-top:1px solid var(--line)}
+.loc:last-child{border-bottom:1px solid var(--line)}
+.loc img{width:180px;height:130px;object-fit:cover;border-radius:3px}
+.loc .mini-gallery{display:flex;gap:.4rem;margin-top:.6rem}
+.loc .mini-gallery img{width:56px;height:56px;border-radius:3px;cursor:zoom-in;transition:transform .15s,opacity .15s}
+.loc .mini-gallery img:hover{transform:scale(1.06);opacity:.9}
+.loc-photo{position:relative;cursor:zoom-in;border-radius:3px;overflow:hidden}
+.loc-photo img{transition:transform .3s ease}
+.loc-photo:hover img{transform:scale(1.04)}
+.photo-count{position:absolute;left:.5rem;bottom:.5rem;background:rgba(20,15,8,.65);color:#fff;font-size:.7rem;font-weight:600;padding:.25rem .55rem;border-radius:20px;backdrop-filter:blur(2px);pointer-events:none}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(10,8,5,.94);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.lightbox.open{display:flex}
+.lightbox-inner{position:relative;max-width:min(92vw,900px);max-height:88vh;width:100%}
+.lightbox-inner img{width:100%;height:100%;max-height:82vh;object-fit:contain;display:block;border-radius:4px}
+.lb-close,.lb-prev,.lb-next{position:fixed;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:50%;width:2.75rem;height:2.75rem;min-width:44px;min-height:44px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:background .2s;touch-action:manipulation}
+.lb-close:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.25)}
+.lb-close{top:1.2rem;right:1.2rem}
+.lb-prev{top:50%;left:1.2rem;transform:translateY(-50%)}
+.lb-next{top:50%;right:1.2rem;transform:translateY(-50%)}
+.lb-meta{position:absolute;left:0;right:0;bottom:-2.2rem;text-align:center;color:#fff;font-size:.85rem;opacity:.8}
+@media (max-width:640px){.lb-prev{left:.4rem}.lb-next{right:.4rem}.lb-close{top:.5rem;right:.5rem}}
+.loc h3{margin:0 0 .3rem;font-size:1.4rem}
+.loc .meta{font-size:.92rem;opacity:.85;margin:.15rem 0}
+.loc .desc{font-size:.95rem;max-width:56ch;margin-top:.5rem}
+.loc .tag{display:inline-block;font-size:.75rem;font-weight:600;color:var(--brick);border:1px solid var(--brick);padding:.1rem .5rem;border-radius:20px;margin-bottom:.5rem}
+.loc-actions{display:flex;flex-direction:column;gap:.5rem;min-width:130px}
+.loc-actions a{font-size:.88rem;text-decoration:none;font-weight:600;text-align:center;padding:.5rem .8rem;border-radius:3px}
+.loc-actions .reserve-btn{background:var(--ink);color:var(--paper)}
+.loc-actions .dir-btn{border:1px solid var(--ink)}
+@media (max-width:900px){
+  .loc{grid-template-columns:1fr;}
+  .loc-photo img, .loc img{width:100%;height:200px}
+  .loc-actions{flex-direction:row}
+  .loc-actions a{flex:1}
+}
+
+/* COFFEE */
+.coffee{padding:5rem 0;background:var(--paper);border-bottom:1px solid var(--line)}
+
+/* Swipe menu carousel */
+.swipe-wrap{position:relative;margin:0 0 3.2rem;max-width:420px}
+.swipe-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border-radius:14px;box-shadow:0 18px 40px -18px rgba(0,0,0,.35);scrollbar-width:none}
+.swipe-track::-webkit-scrollbar{display:none}
+.swipe-card{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1/1;position:relative;background:var(--cream)}
+.swipe-card img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
+.swipe-nav{position:absolute;top:50%;transform:translateY(-50%);width:2.6rem;height:2.6rem;min-width:40px;min-height:40px;border-radius:50%;border:none;background:rgba(20,15,8,.6);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);transition:background .2s,transform .15s;touch-action:manipulation}
+.swipe-nav:hover{background:rgba(20,15,8,.8)}
+.swipe-nav:active{transform:translateY(-50%) scale(.92)}
+.swipe-prev{left:.6rem}
+.swipe-next{right:.6rem}
+.swipe-dots{display:flex;justify-content:center;gap:.45rem;margin-top:.9rem}
+.swipe-dots button{width:7px;height:7px;border-radius:50%;border:none;background:var(--line);padding:0;cursor:pointer;transition:background .2s,width .2s}
+.swipe-dots button.active{background:var(--brick);width:20px;border-radius:5px}
+.swipe-hint{text-align:center;font-size:.82rem;opacity:.65;margin-top:.6rem}
+.swipe-count{position:absolute;top:.7rem;right:.8rem;background:rgba(20,15,8,.55);color:#fff;font-size:.72rem;font-weight:600;padding:.2rem .55rem;border-radius:20px;backdrop-filter:blur(2px)}
+@media (min-width:600px){.swipe-nav{display:flex}}
+@media (max-width:599px){.swipe-nav{width:2.2rem;height:2.2rem;font-size:.95rem}}
+.menu-cat{margin-bottom:2.6rem}
+.menu-cat h3{font-size:1.3rem;margin:0 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.4rem 2rem}
+.menu-item{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem 0;border-bottom:1px dashed var(--line)}
+.menu-item .left{display:flex;align-items:center;gap:.8rem}
+.menu-item .left img{width:46px;height:46px;object-fit:cover;border-radius:50%;flex-shrink:0}
+.menu-item .name{font-weight:600}
+.menu-item .desc{font-size:.88rem;opacity:.8;font-weight:400;display:block}
+.menu-item .price{font-family:"Fraunces",serif;white-space:nowrap}
+.bean-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.5rem;margin-top:1rem}
+.bean{text-align:center}
+.bean img{border-radius:3px;margin-bottom:.6rem;aspect-ratio:5/6;object-fit:cover;width:100%}
+.bean .price{font-family:"Fraunces",serif}
+.note-box{background:var(--cream);border:1px solid var(--line);border-radius:3px;padding:1rem 1.3rem;font-size:.92rem;margin-top:1rem}
+
+/* STORE */
+.store{padding:5rem 0;border-bottom:1px solid var(--line)}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:2rem}
+.prod{text-align:left}
+.prod .swatch{aspect-ratio:1;border-radius:3px;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:.7rem;overflow:hidden}
+.prod .swatch img{width:100%;height:100%;object-fit:cover}
+.prod h4{margin:0 0 .2rem;font-size:1.05rem;font-weight:600}
+.prod .price{font-family:"Fraunces",serif}
+
+/* GIFT */
+.gift{padding:5rem 0;background:var(--ink);color:var(--paper);border-bottom:1px solid var(--line)}
+.gift-inner{display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+.gift h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 .5rem;color:#fff}
+.gift p{max-width:44ch;opacity:.85;margin:0}
+.gift .cta{background:var(--yellow);color:#201804;border-color:var(--yellow)}
+
+/* EVENTS */
+.events{padding:5rem 0;border-bottom:1px solid var(--line)}
+.ev-hero{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:2.6rem;margin-bottom:2.6rem}
+.ev-hero h2{font-size:clamp(1.9rem,4vw,2.6rem);margin:0 0 .8rem;max-width:20ch}
+.ev-hero p{max-width:60ch;font-size:1.05rem}
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem;margin:1.8rem 0}
+.tier{border:1px solid var(--line);border-radius:4px;padding:1.2rem}
+.tier .num{font-family:"Fraunces",serif;font-size:1.5rem;color:var(--brick)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{width:100%;text-align:left;background:none;border:0;padding:1.1rem 0;font-size:1.05rem;font-weight:600;display:flex;justify-content:space-between;cursor:pointer;color:var(--ink);font-family:"Work Sans",sans-serif}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-a p{padding:0 0 1.1rem;margin:0;max-width:64ch;opacity:.9}
+.faq-item.open .faq-a{max-height:220px}
+.faq-item.open .faq-q .chev{transform:rotate(45deg)}
+.chev{transition:transform .2s}
+
+/* FAQ page */
+.faq-sec{padding:5rem 0;background:var(--paper);border-bottom:1px solid var(--line)}
+.faq-search{width:100%;max-width:420px;padding:.7rem 1rem;border:1px solid var(--line);border-radius:3px;font-size:1rem;margin-bottom:2rem;background:var(--cream);color:var(--ink)}
+.faq-cat{font-weight:700;margin:2rem 0 .3rem;font-family:"Fraunces",serif;font-size:1.2rem}
+.faq-empty{opacity:.7;font-style:italic;display:none}
+
+/* CONTACT */
+.contact{padding:5rem 0;border-bottom:1px solid var(--line)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.cform label{display:block;font-size:.88rem;font-weight:600;margin:0 0 .3rem}
+.cform .field{margin-bottom:1.1rem}
+.cform input,.cform textarea{width:100%;padding:.65rem .8rem;border:1px solid var(--line);border-radius:3px;font-family:inherit;font-size:1rem;background:var(--paper);color:var(--ink)}
+.cform textarea{min-height:110px;resize:vertical}
+.cform button{background:var(--ink);color:var(--paper);border:0;padding:.75rem 1.5rem;border-radius:3px;font-weight:600;cursor:pointer}
+.clist{list-style:none;padding:0;margin:0;font-size:.94rem}
+.clist li{padding:.6rem 0;border-bottom:1px solid var(--line)}
+
+/* RESERVE */
+.reserve{padding:5rem 0;background:var(--paper)}
+.rsv-box{max-width:600px;margin:0 auto;border:1px solid var(--line);border-radius:4px;padding:2.2rem;background:var(--cream)}
+.rsv-steps{display:flex;gap:.4rem;margin-bottom:1.6rem}
+.rsv-steps span{flex:1;height:4px;background:var(--line);border-radius:2px}
+.rsv-steps span.active{background:var(--brick)}
+.rsv-step{display:none}
+.rsv-step.active{display:block}
+.rsv-step h3{margin:0 0 1rem}
+.rsv-box .field{margin-bottom:1rem}
+.rsv-box label{display:block;font-size:.85rem;font-weight:600;margin-bottom:.3rem}
+.rsv-box select,.rsv-box input{width:100%;padding:.65rem .8rem;border:1px solid var(--line);border-radius:3px;font-family:inherit;font-size:1rem;background:var(--paper);color:var(--ink)}
+.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.time-grid button{padding:.55rem;border:1px solid var(--line);background:var(--paper);border-radius:3px;cursor:pointer;font-family:inherit;color:var(--ink)}
+.time-grid button.sel{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rsv-nav{display:flex;justify-content:space-between;margin-top:1.6rem}
+.rsv-nav button{padding:.7rem 1.4rem;border-radius:3px;font-weight:600;cursor:pointer;border:1px solid var(--ink);background:none;color:var(--ink);font-family:inherit}
+.rsv-nav button.primary{background:var(--ink);color:var(--paper)}
+.confirm-box{text-align:center}
+.confirm-box .ref{font-family:"Fraunces",serif;font-size:1.4rem;color:var(--brick);margin:1rem 0}
+.summary-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+
+/* FOOTER */
+footer{padding:3.5rem 0 2.5rem}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2.5rem}
+.foot-grid h5{font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;margin:0 0 .9rem;opacity:.7}
+.foot-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.55rem;font-size:.92rem}
+.foot-grid a{text-decoration:none}
+.foot-brand{font-family:"Fraunces",serif;font-weight:700;font-size:1.4rem;margin-bottom:.6rem}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:1px solid var(--line);padding-top:1.5rem;font-size:.85rem;opacity:.75}
+@media (max-width:900px){
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  .story-grid,.jimmy-grid,.contact-grid{grid-template-columns:1fr}
+}
+
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5)}
+@media (prefers-reduced-motion:reduce){.hero video{display:none}}
+.tl{padding:5rem 0;border-bottom:1px solid var(--line)}
+.tl-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:3rem;align-items:center}
+.tl video{width:100%;max-height:560px;object-fit:cover;border-radius:4px;background:#111}
+.tl h2{font-size:clamp(1.9rem,4vw,2.6rem);margin:0 0 1.6rem}
+.tl ol{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:110px 1fr;gap:1rem;padding:1rem 0;border-top:1px solid var(--line)}
+.tl li:last-child{border-bottom:1px solid var(--line)}
+.tl .yr{font-family:"Fraunces",serif;font-weight:700;font-size:1.5rem;color:var(--brick);line-height:1.1}
+.tl .yr small{display:block;font-family:"Work Sans",sans-serif;font-size:.78rem;font-weight:500;color:var(--ink);opacity:.7}
+.tl li p{margin:0;font-size:1rem}
+.tl li strong{font-family:"Fraunces",serif;font-size:1.15rem;display:block}
+@media (max-width:760px){.tl-grid{grid-template-columns:1fr}.tl video{max-height:420px}}
+
+/* Signature lid motif */
+.lid-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em}
+.lid-badge{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.lid-big{position:absolute;opacity:.08;pointer-events:none;color:var(--yellow)}
+@media (prefers-color-scheme:dark){.lid-big{opacity:.06}}
+:root[data-theme="dark"] .lid-big{opacity:.06}
+.sec-head h2 .lid-icon, h1 .lid-icon, h2 .lid-icon{color:var(--yellow)}
+ul.lid-list{list-style:none;margin:0;padding:0}
+ul.lid-list li{position:relative;padding-left:1.6rem;margin-bottom:.5rem}
+ul.lid-list li::before{content:"";position:absolute;left:0;top:.35em;width:.9em;height:.9em;background:var(--yellow);border-radius:50%}
+.divider-lid{display:flex;justify-content:center;padding:1.5rem 0}
+.divider-lid svg{width:28px;height:28px;color:var(--brick);opacity:.55}
+.skip{position:absolute;left:-999px;top:0;background:var(--yellow);padding:.6rem 1rem;z-index:100}
+.skip:focus{left:1rem}
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="lid" viewBox="0 0 100 100">
+    <circle cx="50" cy="58" r="38" fill="currentColor"/>
+    <rect x="36" y="10" width="28" height="16" rx="5" fill="currentColor"/>
+    <circle cx="50" cy="58" r="13" fill="#fff" opacity=".35"/>
+  </symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#home">Jimmy's Coffee</a>
+    <nav aria-label="Primary">
+      <ul class="navlinks">
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#jimmy">This Is Jimmy</a></li>
+        <li><a href="#feed">Feed</a></li>
+        <li><a href="#coffee">Coffee</a></li>
+        <li><a href="#store">Store</a></li>
+        <li><a href="#events">Catering &amp; Events</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="navright">
+      <a class="cta outline" href="#gift">Gift Cards</a>
+      <a class="cta" href="#reserve">Reserve a Table</a>
+      <button class="burger" aria-label="Open menu" onclick="document.getElementById('mpanel').classList.add('open')">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mpanel" role="dialog" aria-label="Mobile menu">
+  <button class="mobile-close" aria-label="Close menu" onclick="document.getElementById('mpanel').classList.remove('open')">×</button>
+  <ul>
+    <li><a href="#locations" onclick="closeM()">Locations</a></li>
+    <li><a href="#jimmy" onclick="closeM()">This Is Jimmy</a></li>
+    <li><a href="#feed" onclick="closeM()">Feed</a></li>
+    <li><a href="#coffee" onclick="closeM()">Coffee</a></li>
+    <li><a href="#store" onclick="closeM()">Store</a></li>
+    <li><a href="#events" onclick="closeM()">Catering &amp; Events</a></li>
+    <li><a href="#faq" onclick="closeM()">FAQ</a></li>
+    <li><a href="#contact" onclick="closeM()">Contact</a></li>
+    <li><a href="#gift" onclick="closeM()">Gift Cards</a></li>
+    <li><a href="#reserve" class="cta" onclick="closeM()" style="display:inline-block">Reserve a Table</a></li>
+  </ul>
+</div>
+
+<main id="main">
+
+<section class="hero" id="home">
+  <img src="images/hero.jpg" alt="Jimmy's Coffee storefront at night, neon sign glowing above the door" loading="eager">
+  <video autoplay muted loop playsinline preload="metadata" aria-hidden="true" src="videos/hero.mp4"></video>
+  <div class="wrap hero-inner">
+    <h1>Toronto's neighbourhood<br>coffee shop.</h1>
+    <p>Eight cafés, zero Jimmys. Long story — locally roasted coffee, perfectly imperfect rooms, and baristas who remember your order anyway.</p>
+    <div class="hero-ctas">
+      <a class="cta" href="#locations">Find a Location</a>
+      <a class="cta outline" href="#reserve">Reserve a Table</a>
+      <a class="cta outline" href="#coffee">Explore Coffee</a>
+    </div>
+  </div>
+</section>
+
+<section class="reveal story">
+  <div class="wrap story-grid">
+    <div>
+      <p class="eyebrow">Made in Toronto. Made for everyone.</p>
+      <h2>By taking a shabby King West home and fixing it up into a small café, Jimmy's Coffee was born.</h2>
+      <p>Simple concept, simple ambition. But the desire for high quality coffee, served in a warm, familiar setting was overwhelming — like sitting in your friend's living room. Engaging baristas with unique spirits sealed the deal, and word of mouth did the rest.</p>
+      <blockquote>Talented baristas crafting irresistible coffee over authentic conversations, all set against the backdrop of cozy, eclectic cafés.</blockquote>
+      <p style="margin-top:1.4rem"><a class="cta" href="#jimmy">This Is Jimmy</a></p>
+    </div>
+    <img src="images/mural.jpg" alt="Mount Jimmy's Rushmore mural on the side of Jimmy's Coffee Gerrard West, depicting Jimi Hendrix, James Dean and Jim Morrison" style="border-radius:4px">
+  </div>
+</section>
+
+<div class="divider-lid" aria-hidden="true"><svg><use href="#lid"></use></svg></div>
+<section class="reveal jimmy" id="jimmy">
+  <div class="wrap jimmy-grid">
+    <img src="images/barista.jpg" alt="A Jimmy's Coffee barista pouring a drink behind the counter">
+    <div>
+      <p class="eyebrow">This Is Jimmy</p>
+      <h2>Who is Jimmy, anyway?</h2>
+      <p>Jimmy's Coffee first opened its doors on December 10th, 2009. The idea came to life thanks to serial entrepreneur Phil Morrison. Phil? You mean his name isn't Jimmy? Then who is Jimmy?</p>
+      <p>The elusive Jimmy doesn't exist as a singular person — we love all the Jimmies. <span class="names">James Dean, Jimmy Hoffa, Jimi Hendrix, Jimmy Carter, Jim Morrison, Jimmy Durante</span>, your friend Jimmy, my friend Jimmy, or maybe even your dad Jimmy.</p>
+      <p>At Jimmy's Coffee we pride ourselves on excellent coffee and awesome customer service. Our coffee, a Toronto favourite, is locally roasted by experts in the traditional Italian style. Our amazing baristas supply the fun — everything is perfectly imperfect in our rustic, cozy interiors. So come stay awhile, or take it to go and brighten your day with our signature yellow lid.</p>
+      <p><a class="cta" href="#locations">Visit Jimmy's Coffee</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="reveal tl" aria-labelledby="tlh">
+  <div class="wrap tl-grid">
+    <video autoplay muted loop playsinline preload="metadata" aria-label="Quiet moment inside a Jimmy's Coffee: No rush, just coffee." src="videos/quiet.mp4"></video>
+    <div>
+      <p class="eyebrow">No rush, just coffee.</p>
+      <h2 id="tlh">One neighbourhood at a time.</h2>
+      <ol>
+        <li><div class="yr">2009<small>Dec 10</small></div><p><strong>107 Portland St</strong>The first Jimmy's opens in a fixed-up King West house.</p></li>
+        <li><div class="yr">2013<small>Early</small></div><p><strong>191 Baldwin St</strong>Kensington Market gets its back patio.</p></li>
+        <li><div class="yr">2014<small>May</small></div><p><strong>84 Gerrard St W</strong>Our third location, wearing the Mount Jimmy's Rushmore mural.</p></li>
+        <li><div class="yr">2015<small>Nov</small></div><p><strong>15 Ossington Ave</strong>The fourth shop, with a fireplace for the cold months.</p></li>
+        <li><div class="yr">2016<small>Oct</small></div><p><strong>166 McCaul St</strong>The sixth location joins the Jimmy's family.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="reveal locations" id="locations">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Our locations <svg class="lid-icon"><use href="#lid"></use></svg></h2>
+        <p>Eight rooms across Toronto, each with its own personality — same coffee, same welcome.</p>
+      </div>
+    </div>
+
+    <div class="map-controls">
+      <button type="button" class="geo-btn" id="geoBtn" onclick="findNearest()">
+        <svg class="lid-icon" style="width:.9em;height:.9em"><use href="#lid"></use></svg>
+        Find my nearest Jimmy's
+      </button>
+      <span class="geo-status" id="geoStatus">Tap a pin, or let us find the closest room to you.</span>
+    </div>
+
+    <div class="map-wrap">
+      <svg class="map-svg" id="neighMap" viewBox="0 0 400 260" role="img" aria-label="Stylized map of Jimmy's Coffee locations across Toronto">
+        <line class="map-street" x1="10" y1="60" x2="390" y2="60"></line>
+        <line class="map-street" x1="10" y1="140" x2="390" y2="140"></line>
+        <line class="map-street" x1="10" y1="200" x2="390" y2="200"></line>
+        <line class="map-street" x1="90" y1="10" x2="90" y2="250"></line>
+        <line class="map-street" x1="180" y1="10" x2="180" y2="250"></line>
+        <line class="map-street" x1="260" y1="10" x2="260" y2="250"></line>
+        <g id="mapPins"></g>
+      </svg>
+    </div>
+
+    <div class="loc-list" id="locList"><!--LOCATIONS--></div>
+  </div>
+</section>
+
+<div class="divider-lid" aria-hidden="true"><svg><use href="#lid"></use></svg></div>
+<section class="reveal coffee" id="coffee">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Coffee <svg class="lid-icon"><use href="#lid"></use></svg></h2>
+        <p>The drinks you'll actually find on our counter — plus the beans we send home with you. No stock photos, we promise.</p>
+      </div>
+    </div>
+
+    <div class="swipe-wrap" id="menuSwipe">
+      <p class="eyebrow" style="margin-bottom:.6rem">Swipe the menu</p>
+      <div class="swipe-track" id="swipeTrack" role="region" aria-label="Seasonal drink menu, swipeable" tabindex="0">
+        <div class="swipe-card"><img src="images/card-cover.jpg" alt="Jimmy's Coffee spring menu — swipe right, which drink are you?" loading="lazy"></div>
+        <div class="swipe-card"><img src="images/card-coldbrew.jpg" alt="Cold Brew drink card" loading="lazy"></div>
+        <div class="swipe-card"><img src="images/card-icedlatte.jpg" alt="Iced Latte drink card" loading="lazy"></div>
+        <div class="swipe-card"><img src="images/card-matcha.jpg" alt="Strawberry Matcha drink card" loading="lazy"></div>
+        <div class="swipe-card"><img src="images/card-lavender.jpg" alt="Lavender Lemonade drink card" loading="lazy"></div>
+        <div class="swipe-card"><img src="images/card-icedtea.jpg" alt="Iced Tea Lemonade drink card" loading="lazy"></div>
+        <span class="swipe-count" id="swipeCount">1 / 6</span>
+      </div>
+      <button type="button" class="swipe-nav swipe-prev" aria-label="Previous drink" onclick="swipeGo(-1)">&#8592;</button>
+      <button type="button" class="swipe-nav swipe-next" aria-label="Next drink" onclick="swipeGo(1)">&#8594;</button>
+      <div class="swipe-dots" id="swipeDots"></div>
+      <p class="swipe-hint">Swipe, or use the arrows</p>
+    </div>
+
+    <div class="menu-cat">
+      <h3>On the menu</h3>
+      <div class="menu-grid">
+        <div class="menu-item"><span class="left"><img src="images/drink-coldbrew.jpg" alt="Jimmy's Coffee cold brew"><span class="name">Cold Brew<span class="desc">No milk, no cream, no problems.</span></span></span></div>
+        <div class="menu-item"><span class="left"><img src="images/drink-icedlatte.jpg" alt="Jimmy's Coffee iced latte"><span class="name">Iced Latte<span class="desc">She may be late for work, but she always has time for her coffee.</span></span></span></div>
+        <div class="menu-item"><span class="left"><img src="images/drink-matcha.jpg" alt="Jimmy's Coffee strawberry matcha"><span class="name">Strawberry Matcha<span class="desc">Hey now — these are what dreams are made of.</span></span></span></div>
+        <div class="menu-item"><span class="left"><img src="images/drink-lavender.jpg" alt="Jimmy's Coffee lavender lemonade"><span class="name">Lavender Lemonade<span class="desc">Romantic energy only.</span></span></span></div>
+        <div class="menu-item"><span class="left"><img src="images/drink-icedtea.jpg" alt="Jimmy's Coffee iced tea lemonade"><span class="name">Iced Tea Lemonade<span class="desc">Sweet, but not too sweet.</span></span></span></div>
+        <div class="menu-item"><span class="left"><span class="name">Espresso &amp; Drip Coffee<span class="desc">Our house blend, brewed fresh</span></span></span></div>
+      </div>
+      <p class="note-box">Prices vary slightly by location — ask your barista, or find the full board in‑café. We didn't want to guess at numbers we couldn't confirm.</p>
+    </div>
+
+    <div class="menu-cat">
+      <h3>Whole bean coffee — 340g bags</h3>
+      <div class="bean-grid">
+        <div class="bean"><img src="images/bag-hoffa.jpg" alt="Bag of Jimmy's Coffee — The Hoffa Blend, espresso roast"><div>The Hoffa — Espresso</div><div class="price">CA$21.50</div></div>
+        <div class="bean"><img src="images/bag-dean.jpg" alt="Bag of Jimmy's Coffee — The Dean, medium roast"><div>The Dean — Medium</div><div class="price">CA$21.50</div></div>
+        <div class="bean"><img src="images/bag-hendrix.jpg" alt="Bag of Jimmy's Coffee — The Hendrix, dark roast"><div>The Hendrix — Dark</div><div class="price">CA$21.50</div></div>
+        <div class="bean"><img src="images/bag-carter.jpg" alt="Bag of Jimmy's Coffee — Carter, decaf espresso"><div>Carter — Decaf</div><div class="price">CA$22.50</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal store" id="store">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Store</h2>
+        <p>Wear the lid, basically. Merch from the shop counter — buy in‑café, or check back soon for online checkout.</p>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div class="prod"><div class="swatch"><img src="images/prod-mug.jpg" alt="Jimmy's Coffee yellow mug"></div><h4>Yellow Mug</h4><div class="price">CA$16.00</div></div>
+      <div class="prod"><div class="swatch"><img src="images/prod-toque.jpg" alt="Jimmy's Coffee black logo toque"></div><h4>Black Logo Toque</h4><div class="price">CA$22.00</div></div>
+      <div class="prod"><div class="swatch"><img src="images/prod-logotee.jpg" alt="Jimmy's Coffee logo tee"></div><h4>Jimmy's Logo Tee</h4><div class="price">CA$21.50</div></div>
+      <div class="prod"><div class="swatch"><img src="images/prod-racingtee.jpg" alt="Jimmy's Coffee vintage racing tee"></div><h4>Vintage Racing Tee</h4><div class="price">CA$21.50</div></div>
+      <div class="prod"><div class="swatch"><img src="images/prod-tote.jpg" alt="Jimmy's Coffee tote bag"></div><h4>Jimmy's Tote Bag</h4><div class="price">CA$36.00</div></div>
+      <div class="prod"><div class="swatch"><img src="images/prod-riderstee.jpg" alt="Jimmy's Coffee riders tee"></div><h4>Jimmy's Riders Tee</h4><div class="price">CA$21.50</div></div><div class="prod"><div class="swatch"><img src="images/prod-hatpatch.jpg" alt="Jimmy's Coffee trucker hat with patch logo"></div><h4>Trucker Hat — Patch</h4><div class="price">CA$24.00</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal proof" id="feed" style="padding:5rem 0;border-bottom:1px solid var(--line);background:var(--paper)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>From the feed <svg class="lid-icon"><use href="#lid"></use></svg></h2>
+        <p>Real photos, real drinks, real captions — pulled straight from <a href="https://www.instagram.com/jimmys_coffee/" target="_blank" rel="noopener">@Jimmys_Coffee</a>. No stock library here.</p>
+      </div>
+    </div>
+    <div class="feed-grid">
+      <div class="feed-tile"><img src="images/feed-shelf.jpg" alt="Shelf of Jimmy's Coffee mugs, hats and coffee bags" loading="lazy"><span class="feed-cap">The shelf at 107 Portland</span></div>
+      <div class="feed-tile"><img src="images/card-coldbrew.jpg" alt="Cold brew drink card" loading="lazy"></div>
+      <div class="feed-tile"><img src="images/feed-handcup.jpg" alt="Illustration of someone holding a Jimmy's Coffee cup" loading="lazy"><span class="feed-cap">Fan art, framed</span></div>
+      <div class="feed-tile"><img src="images/card-matcha.jpg" alt="Strawberry matcha drink card" loading="lazy"></div>
+      <div class="feed-tile"><img src="images/feed-heart.jpg" alt="Jimmy's Coffee latte art in the shape of a heart" loading="lazy"><span class="feed-cap">To: the snack that stole my heart</span></div>
+      <div class="feed-tile"><img src="images/card-lavender.jpg" alt="Lavender lemonade drink card" loading="lazy"></div>
+      <div class="feed-tile"><img src="images/feed-tee.jpg" alt="Jimmy's Coffee longsleeve tee, back print" loading="lazy"><span class="feed-cap">Merch, spotted in the wild</span></div>
+      <div class="feed-tile"><img src="images/barista.jpg" alt="A Jimmy's Coffee barista pouring a drink behind the counter" loading="lazy"><span class="feed-cap">Behind the counter</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal gift" id="gift">
+  <div class="wrap gift-inner">
+    <div>
+      <h2>Give the perfect gift.</h2>
+      <p>A voucher for yourself, or a gift for a friend — delivered by text or email, redeemable at every Jimmy's Coffee location.</p>
+    </div>
+    <a class="cta" href="https://squareup.com/gift/ML867AZ25NTZ6/order" target="_blank" rel="noopener">Buy a Gift Card</a>
+  </div>
+</section>
+
+<section class="reveal events" id="events">
+  <div class="wrap">
+    <div class="ev-hero">
+      <h2>Bring Jimmy's Coffee to your event.</h2>
+      <p>Whether you're planning a corporate meeting, film set, conference, staff breakfast, or private event, Jimmy's Coffee offers flexible catering options designed to keep your guests caffeinated and well fed.</p>
+      <div class="hero-ctas" style="margin-top:1.2rem">
+        <a class="cta" href="#reserve">Plan My Event</a>
+        <a class="cta outline" style="border-color:var(--ink)" href="#events-faq">Explore Catering</a>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Fraunces',serif;font-size:1.4rem">Coffee, by the crowd</h3>
+    <div class="tier-grid">
+      <div class="tier"><div class="num">12</div>Serves 12 — 96oz disposable takeaway boxes</div>
+      <div class="tier"><div class="num">40</div>Serves 40 — 9.5L reusable insulated Cambro</div>
+      <div class="tier"><div class="num">80</div>Serves 80 — 18L reusable insulated Cambro</div>
+    </div>
+    <p style="max-width:64ch">All coffee catering orders include cups, lids, stir sticks, sweeteners, milk, and all necessary condiments. Looking for food too? We offer assorted pastry platters, sandwiches, wraps, and other baked goods — vegan and gluten‑free options available on request. Need an extra hand? We can send a Jimmy to help keep the coffee flowing, and our mobile espresso cart is coming soon.</p>
+
+    <h3 id="events-faq" style="font-family:'Fraunces',serif;font-size:1.4rem;margin-top:2.4rem">Catering FAQ</h3>
+    <div id="evFaq"><!--EVFAQ--></div>
+  </div>
+</section>
+
+<div class="divider-lid" aria-hidden="true"><svg><use href="#lid"></use></svg></div>
+<section class="reveal faq-sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>Frequently asked <svg class="lid-icon"><use href="#lid"></use></svg></h2><p>Search, or browse by topic. We tried to answer like a human, not a policy document.</p></div></div>
+    <input class="faq-search" type="search" id="faqSearch" placeholder="Search FAQs — try “delivery” or “staff”" oninput="filterFaq()">
+    <div id="faqAll"><!--FAQALL--></div>
+    <p class="faq-empty" id="faqEmpty">No results — try another word, or reach us directly on the <a href="#contact">contact page</a>.</p>
+  </div>
+</section>
+
+<section class="reveal capture" id="join" style="padding:4.5rem 0;background:var(--ink);color:var(--paper);border-bottom:1px solid var(--line)">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap">
+    <div style="max-width:38ch">
+      <p class="eyebrow" style="color:var(--yellow)">Get the next drop first</p>
+      <h2 style="color:#fff;font-size:clamp(1.7rem,4vw,2.3rem);margin:0 0 .5rem">New drinks, new merch, new excuses to stop by.</h2>
+      <p style="opacity:.85;margin:0">One email, roughly whenever there's actually something worth saying. No spam, no daily "10% off" nonsense.</p>
+    </div>
+    <form id="joinForm" onsubmit="return joinList(event)" style="display:flex;gap:.6rem;flex-wrap:wrap;flex:1;min-width:280px;max-width:420px">
+      <input type="email" id="joinEmail" required placeholder="you@email.com" aria-label="Email address" style="flex:1;min-width:180px;padding:.75rem 1rem;border-radius:3px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;font-family:inherit;font-size:1rem">
+      <button type="submit" class="cta" style="background:var(--yellow);color:#201804;border-color:var(--yellow);white-space:nowrap">Sign me up</button>
+    </form>
+    <p id="joinOk" style="display:none;width:100%;text-align:right;color:var(--yellow);font-weight:600;font-size:.9rem;margin:0">Almost there — check your email app to send it.</p>
+  </div>
+</section>
+
+<section class="reveal contact" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <h2 style="font-size:clamp(2rem,4vw,2.8rem);margin:0 0 1rem">Contact</h2>
+      <p style="max-width:44ch">Have a question, a compliment, or a catering request? Send us a note — or reach any location directly below.</p>
+      <ul class="clist" style="margin-top:1.6rem">
+        <li><strong>Careers</strong> — work4jimmys@jimmyscoffee.ca</li>
+        <li><strong>Instagram</strong> — @Jimmys_Coffee</li>
+      </ul>
+      <ul class="clist" id="contactLocs" style="margin-top:1rem"><!--CONTACTLOCS--></ul>
+    </div>
+    <form class="cform" onsubmit="return sendContact(event)">
+      <div class="field"><label for="cname">Name</label><input id="cname" required></div>
+      <div class="field"><label for="cemail">Email</label><input id="cemail" type="email" required></div>
+      <div class="field"><label for="cphone">Phone</label><input id="cphone" type="tel"></div>
+      <div class="field"><label for="csubject">Subject</label><input id="csubject" required></div>
+      <div class="field"><label for="cmessage">Message</label><textarea id="cmessage" required></textarea></div>
+      <button type="submit">Send message</button>
+      <p id="contactOk" style="display:none;margin-top:1rem;color:var(--brick);font-weight:600">Thanks — your message is drafted in your email app to send.</p>
+    </form>
+  </div>
+</section>
+
+<section class="reveal reserve" id="reserve">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>Make time for coffee.</h2><p>Send a table request — we'll confirm by email or phone.</p></div></div>
+    <div class="rsv-box">
+      <div class="rsv-steps"><span class="active" data-s="1"></span><span data-s="2"></span><span data-s="3"></span><span data-s="4"></span></div>
+
+      <div class="rsv-step active" data-step="1">
+        <h3>1. Choose a location</h3>
+        <div class="field"><select id="rLoc"><!--LOCOPTS--></select></div>
+        <div class="field"><label for="rDate">Date</label><input type="date" id="rDate"></div>
+        <div class="field"><label for="rParty">Party size</label><select id="rParty"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6+</option></select></div>
+      </div>
+
+      <div class="rsv-step" data-step="2">
+        <h3>2. Pick a time</h3>
+        <div class="time-grid" id="timeGrid"></div>
+      </div>
+
+      <div class="rsv-step" data-step="3">
+        <h3>3. Your details</h3>
+        <div class="field"><label for="rFirst">First name</label><input id="rFirst"></div>
+        <div class="field"><label for="rLast">Last name</label><input id="rLast"></div>
+        <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email"></div>
+        <div class="field"><label for="rPhone">Phone</label><input id="rPhone" type="tel"></div>
+        <div class="field"><label for="rNote">Special request, occasion, or accessibility need (optional)</label><input id="rNote"></div>
+      </div>
+
+      <div class="rsv-step" data-step="4">
+        <div class="confirm-box" id="confirmBox">
+          <h3>4. Confirm</h3>
+          <div id="summary"></div>
+        </div>
+      </div>
+
+      <div class="rsv-nav">
+        <button type="button" onclick="rsvBack()" id="rBack" style="visibility:hidden">Back</button>
+        <button type="button" onclick="rsvNext()" class="primary" id="rNext">Continue</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Jimmy's Coffee</div>
+        <p style="max-width:28ch;font-size:.92rem;opacity:.8">Toronto's neighbourhood coffee shop, since 2009. Nobody's named Jimmy. We checked.</p>
+      </div>
+      <div><h5>Explore</h5><ul>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#jimmy">This Is Jimmy</a></li>
+        <li><a href="#coffee">Coffee</a></li>
+        <li><a href="#store">Store</a></li>
+      </ul></div>
+      <div><h5>Plan</h5><ul>
+        <li><a href="#gift">Gift Cards</a></li>
+        <li><a href="#events">Catering &amp; Events</a></li>
+        <li><a href="#reserve">Reserve</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul></div>
+      <div><h5>Connect</h5><ul>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://www.instagram.com/jimmys_coffee/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="mailto:work4jimmys@jimmyscoffee.ca">Careers</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© Jimmy's Coffee. Made in Toronto.</span>
+      <span>Privacy Policy · Terms · Cookie Policy</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onclick="if(event.target===this) closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()" aria-label="Close photo viewer">&times;</button>
+  <button class="lb-prev" onclick="lbStep(-1)" aria-label="Previous photo">&#8592;</button>
+  <div class="lightbox-inner">
+    <img id="lbImg" src="" alt="">
+    <p class="lb-meta" id="lbMeta"></p>
+  </div>
+
+<script>
+function closeM(){document.getElementById('mpanel').classList.remove('open')}
+
+const LOCATIONS = [
+  {name:"107 Portland St (Original)", lat:43.6448, lng:-79.4008, addr:"107 Portland St, Toronto, ON", phone:"416-901-2289", hours:"Mon–Fri 7:00am–6:00pm · Sat–Sun 8:00am–6:00pm", tag:"Flagship · est. 2009", desc:"Jimmy's Coffee was founded in 2009 on Portland St. in an unlikely, dilapidated residential home. It's a small but bustling café with a small back patio — the perfect King West escape.", img:"images/loc-portland.jpg"},
+  {name:"191 Baldwin St — Kensington Market", lat:43.6554, lng:-79.4012, addr:"191 Baldwin St, Toronto, ON", phone:"647-352-5466", hours:"Mon–Sun 8:00am–6:00pm", tag:"Opened 2013", desc:"In the heart of Kensington Market, highlighted by a beautiful, expansive back patio — Toronto's perfect downtown oasis. Come early; tables fill fast with students, artists and locals.", gallery:["images/g-kensington-1.jpg", "images/g-kensington-2.jpg"], img:"images/loc-kensington.jpg"},
+  {name:"84 Gerrard St W", lat:43.6578, lng:-79.3857, addr:"84 Gerrard St W, Toronto, ON", phone:"416-792-1141", hours:"Mon–Fri 7:00am–6:00pm · Sat–Sun 8:00am–5:00pm", tag:"Opened May 2014", desc:"A stand-alone brick building you can't miss, with the Mount Jimmy's Rushmore mural on the wall. Plenty of studying space spread over three floors — the third doubles as boardroom rental.", gallery:["images/g-gerrard-1.jpg", "images/g-gerrard-2.jpg"], img:"images/loc-gerrard.jpg"},
+  {name:"15 Ossington Ave", lat:43.6444, lng:-79.4201, addr:"15 Ossington Ave, Toronto, ON", phone:"647-348-2204", hours:"Mon–Fri 7:00am–6:00pm · Sat–Sun 8:00am–6:00pm", tag:"Opened Nov 2015", desc:"Known for boutique shops and intimate bars, Ossington is the perfect place for a lazy weekend stroll. Ceiling murals, a communal table, and a fireplace for Toronto's colder months.", gallery:["images/g-ossington-1.jpg", "images/g-ossington-2.jpg"], img:"images/loc-ossington.jpg"},
+  {name:"806 Queen St E", lat:43.6598, lng:-79.3494, addr:"806 Queen St E, Toronto, ON", phone:"416-546-4154", hours:"Mon–Sun 7:00am–6:00pm", tag:"Queen East / Riverside", desc:"In the Riverside neighbourhood, just steps from Leslieville, with cozy indoor seating and a spacious back patio. Featuring cold-pressed juices, kombucha, smoothies and unique treats.", gallery:["images/g-queeneast-1.jpg", "images/g-queeneast-2.jpg", "images/g-queeneast-3.jpg"], img:"images/loc-queeneast.jpg"},
+  {name:"166 McCaul St", lat:43.6537, lng:-79.39, addr:"166 McCaul St, Toronto, ON", phone:"647-748-0500", hours:"Mon–Fri 7:00am–6:00pm · Sat–Sun 8:00am–5:00pm", tag:"Opened Oct 2016", desc:"Just around the corner from Baldwin Village, a few steps from OCAD, U of T and UHN. A cozy fireplace, and an open-concept barista training area behind old factory windows.", gallery:["images/g-mccaul-1.jpg", "images/g-mccaul-2.jpg", "images/g-mccaul-3.jpg"], img:"images/loc-mccaul.jpg"},
+  {name:"380 Royal York Rd — Mimico", lat:43.6179, lng:-79.4968, addr:"380 Royal York Rd, Toronto, ON", phone:"647-748-7333", hours:"Mon–Sun 7:00am–6:00pm", tag:"Mimico", desc:"Population 18,573 and counting — Jimmy's newer west-end neighbourhood room, with the same warm welcome as the original.", gallery:["images/g-mimico-1.jpg", "images/g-mimico-2.jpg", "images/g-mimico-3.jpg"], img:"images/loc-mimico.jpg"},
+  {name:"585 University Ave — Toronto General Hospital", lat:43.6579, lng:-79.3874, addr:"585 University Ave, Toronto, ON", phone:"", hours:"Mon–Fri 6:30am–7:00pm · Sat–Sun 8:00am–4:00pm", tag:"Peter Munk Building", desc:"Located inside the Peter Munk Building at Toronto General Hospital, proud to serve patients, visitors, hospital staff and the surrounding community with coffee, espresso and grab-and-go options.", img:"images/loc-hospital.jpg"}
+];
+
+function mapsUrl(addr){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent("Jimmy's Coffee "+addr)}
+
+document.getElementById('locList').innerHTML = LOCATIONS.map((l,i)=>{
+  const shots = [l.img, ...(l.gallery||[])];
+  return `
+  <div class="loc" id="loc-${i}">
+    <div class="loc-photo" onclick="openLightbox(${i},0)" role="button" tabindex="0" aria-label="View all photos of ${l.name.split(' — ')[0]}" onkeypress="if(event.key==='Enter')openLightbox(${i},0)">
+      <img src="${l.img}" alt="Jimmy's Coffee — ${l.name} storefront" loading="lazy">
+      ${shots.length>1 ? `<span class="photo-count">🔍 ${shots.length} photos</span>` : `<span class="photo-count">🔍 View</span>`}
+    </div>
+    <div>
+      <span class="tag">${l.tag}</span><span class="dist-badge" id="dist-${i}"></span>
+      <h3>${l.name}</h3>
+      <div class="meta">${l.addr}${l.phone? " · "+l.phone : ""}</div>
+      <div class="meta">${l.hours}</div>
+      <p class="desc">${l.desc}</p>
+      ${l.gallery ? `<div class="mini-gallery">${l.gallery.map((g,gi)=>`<img src="${g}" alt="More of ${l.name.split(' — ')[0]}" loading="lazy" onclick="openLightbox(${i},${gi+1})" role="button" tabindex="0" onkeypress="if(event.key==='Enter')openLightbox(${i},${gi+1})">`).join('')}</div>` : ''}
+    </div>
+    <div class="loc-actions">
+      <a class="reserve-btn" href="#reserve">Reserve</a>
+      <a class="dir-btn" href="${mapsUrl(l.addr)}" target="_blank" rel="noopener">Directions</a>
+    </div>
+  </div>
+`;}).join('');
+
+document.getElementById('contactLocs').innerHTML = LOCATIONS.map(l=>`<li><strong>${l.name.split(' — ')[0]}</strong><br>${l.addr}${l.phone? " · "+l.phone:""}<br>${l.hours}</li>`).join('');
+
+document.getElementById('rLoc').innerHTML = LOCATIONS.map(l=>`<option>${l.name}</option>`).join('');
+
+// ---- Stylized neighbourhood map: plot real coordinates onto the SVG grid ----
+(function(){
+  const lats = LOCATIONS.map(l=>l.lat), lngs = LOCATIONS.map(l=>l.lng);
+  const latMin=Math.min(...lats), latMax=Math.max(...lats);
+  const lngMin=Math.min(...lngs), lngMax=Math.max(...lngs);
+  const pad = 32;
+  function project(lat,lng){
+    const x = pad + (lng-lngMin)/(lngMax-lngMin) * (400-2*pad);
+    const y = pad + (1-(lat-latMin)/(latMax-latMin)) * (260-2*pad);
+    return [x,y];
+  }
+  const g = document.getElementById('mapPins');
+  g.innerHTML = LOCATIONS.map((l,i)=>{
+    const [x,y] = project(l.lat,l.lng);
+    const short = l.name.split(' — ')[0].split(' (')[0];
+    return `<g class="map-pin" id="pin-${i}" tabindex="0" role="button" aria-label="${short}" onclick="focusLoc(${i})" onkeypress="if(event.key==='Enter')focusLoc(${i})" transform="translate(${x-7},${y-7})">
+      <circle class="halo" cx="7" cy="7" r="13"></circle>
+      <svg class="lidshape" x="0" y="0" width="14" height="14" viewBox="0 0 100 100"><use href="#lid"></use></svg>
+      <text x="9" y="-3" text-anchor="middle">${short}</text>
+    </g>`;
+  }).join('');
+})();
+
+// Location photo lightbox
+let lbLocIdx=null, lbPhotoIdx=0, lbShots=[];
+function openLightbox(locIdx, photoIdx){
+  lbLocIdx = locIdx;
+  lbShots = [LOCATIONS[locIdx].img, ...(LOCATIONS[locIdx].gallery||[])];
+  lbPhotoIdx = Math.max(0, Math.min(photoIdx, lbShots.length-1));
+  renderLb();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+function lbStep(dir){
+  lbPhotoIdx = (lbPhotoIdx + dir + lbShots.length) % lbShots.length;
+  renderLb();
+}
+function renderLb(){
+  const name = LOCATIONS[lbLocIdx].name.split(' — ')[0];
+  document.getElementById('lbImg').src = lbShots[lbPhotoIdx];
+  document.getElementById('lbImg').alt = name + ' photo ' + (lbPhotoIdx+1);
+  document.getElementById('lbMeta').textContent = `${name} — ${lbPhotoIdx+1} / ${lbShots.length}`;
+}
+document.addEventListener('keydown', (e)=>{
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowRight') lbStep(1);
+  if(e.key==='ArrowLeft') lbStep(-1);
+});
+// basic touch swipe support
+document.addEventListener('DOMContentLoaded', function(){
+  const inner = document.querySelector('.lightbox-inner');
+  if(!inner) return;
+  let sx=null;
+  inner.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; }, {passive:true});
+  inner.addEventListener('touchend', e=>{
+    if(sx===null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    if(Math.abs(dx) > 40) lbStep(dx>0 ? -1 : 1);
+    sx = null;
+  }, {passive:true});
+});
+
+function focusLoc(i){
+  document.querySelectorAll('.map-pin').forEach(p=>p.classList.remove('active'));
+  const pin = document.getElementById('pin-'+i);
+  if(pin) pin.classList.add('active');
+  const card = document.getElementById('loc-'+i);
+  if(card){
+    if(card.scrollIntoView) card.scrollIntoView({behavior:'smooth', block:'center'});
+    card.style.transition='box-shadow .3s';
+    card.style.boxShadow='0 0 0 2px var(--brick) inset';
+    setTimeout(()=>{ card.style.boxShadow=''; }, 1600);
+  }
+}
+
+function haversine(lat1,lng1,lat2,lng2){
+  const R=6371, toRad=d=>d*Math.PI/180;
+  const dLat=toRad(lat2-lat1), dLng=toRad(lng2-lng1);
+  const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function findNearest(){
+  const btn = document.getElementById('geoBtn');
+  const status = document.getElementById('geoStatus');
+  if(!navigator.geolocation){ status.textContent = "Location isn't available in this browser — pick a spot on the map instead."; return; }
+  btn.disabled = true; status.textContent = "Finding you…";
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude, longitude} = pos.coords;
+    const withDist = LOCATIONS.map((l,i)=>({i, d: haversine(latitude,longitude,l.lat,l.lng)}));
+    withDist.sort((a,b)=>a.d-b.d);
+    withDist.forEach(({i,d})=>{
+      const badge = document.getElementById('dist-'+i);
+      if(badge) badge.textContent = d<1 ? Math.round(d*1000)+' m away' : d.toFixed(1)+' km away';
+    });
+    const nearest = withDist[0];
+    const list = document.getElementById('locList');
+    withDist.forEach(({i})=> list.appendChild(document.getElementById('loc-'+i)));
+    btn.disabled = false;
+    const shortName = LOCATIONS[nearest.i].name.split(' — ')[0].split(' (')[0];
+    status.textContent = `Closest: ${shortName} — ${nearest.d<1 ? Math.round(nearest.d*1000)+'m' : nearest.d.toFixed(1)+'km'} away.`;
+    focusLoc(nearest.i);
+  }, err=>{
+    btn.disabled = false;
+    status.textContent = "Couldn't get your location — pick a spot on the map instead.";
+  }, {timeout:8000});
+}
+
+// Event catering FAQ (verbatim from supplied source material)
+const EV_FAQ = [
+  ["How much notice do you need?","We recommend placing catering orders at least 1 week in advance. Larger orders, staffed events, and special requests may require additional notice. If you have a last-minute request, get in touch and we'll do our best to accommodate it."],
+  ["Do you offer delivery?","Yes. Delivery is available for catering orders within Toronto and surrounding areas. Delivery fees vary depending on location and order size. Pickup can also be arranged from select Jimmy's Coffee locations."],
+  ["How much coffee should I order?","Not sure what size you need? Tell us your estimated guest count and we can recommend the right amount of coffee for your event."],
+  ["Can Jimmy's provide staff for my event?","Yes. Depending on availability and the size of your event, we can provide a Jimmy to help serve coffee and keep everything stocked throughout the event."],
+  ["When will the espresso cart be available?","Our mobile espresso cart is coming soon. If you're interested in having freshly prepared espresso drinks at an upcoming event, let us know through the catering inquiry form. We'll keep you updated as the service becomes available."]
+];
+// General FAQ
+const GEN_FAQ = [
+  ["General","What are Jimmy's hours?","Hours vary by café — check the location list above; most rooms open around 7–8am and close 5–7pm, seven days a week."],
+  ["General","Is Jimmy a real person?","Not one single person — Jimmy's Coffee started in 2009, named in the spirit of every Jimmy we love: James Dean, Jimmy Hoffa, Jimi Hendrix, Jimmy Carter, Jim Morrison, Jimmy Durante, and your friend Jimmy too."],
+  ["Careers","How do I apply for a job at Jimmy's?","Send a note to work4jimmys@jimmyscoffee.ca with a little about you and why you want to join, plus your resume. Coffee experience is an asset but not a requirement — or introduce yourself in person at any shop."],
+  ["Gift Cards","How do gift cards work?","Buy, reload or check the balance of a Jimmy's Coffee gift card any time — delivered instantly by text or email, or bought for yourself."]
+];
+document.getElementById('evFaq').innerHTML = EV_FAQ.map((f,i)=>`
+  <div class="faq-item" id="evfaq-${i}">
+    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">${f[0]}<span class="chev">+</span></button>
+    <div class="faq-a"><p>${f[1]}</p></div>
+  </div>`).join('');
+
+function buildFaqAll(){
+  let cats = {};
+  EV_FAQ.forEach(f=>{ (cats['Catering & Events']=cats['Catering & Events']||[]).push([f[0],f[1]]) });
+  GEN_FAQ.forEach(f=>{ (cats[f[0]]=cats[f[0]]||[]).push([f[1],f[2]]) });
+  let html='';
+  Object.keys(cats).forEach(cat=>{
+    html+=`<div class="faq-cat">${cat}</div>`;
+    cats[cat].forEach(([q,a])=>{
+      html+=`<div class="faq-item" data-q="${q.toLowerCase()}" data-a="${a.toLowerCase()}">
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">${q}<span class="chev">+</span></button>
+        <div class="faq-a"><p>${a}</p></div></div>`;
+    });
+  });
+  document.getElementById('faqAll').innerHTML = html;
+}
+buildFaqAll();
+
+function filterFaq(){
+  const term = document.getElementById('faqSearch').value.toLowerCase();
+  let any=false;
+  document.querySelectorAll('#faqAll .faq-item').forEach(el=>{
+    const match = el.dataset.q.includes(term) || el.dataset.a.includes(term);
+    el.style.display = match ? '' : 'none';
+    if(match) any=true;
+  });
+  document.querySelectorAll('#faqAll .faq-cat').forEach(cat=>{
+    let sib = cat.nextElementSibling, show=false;
+    while(sib && !sib.classList.contains('faq-cat')){ if(sib.style.display!=='none') show=true; sib=sib.nextElementSibling; }
+    cat.style.display = show ? '' : 'none';
+  });
+  document.getElementById('faqEmpty').style.display = any ? 'none':'block';
+}
+
+function joinList(e){
+  e.preventDefault();
+  const email = document.getElementById('joinEmail').value;
+  window.location.href = `mailto:hello@jimmyscoffee.ca?subject=${encodeURIComponent('Sign me up')}&body=${encodeURIComponent('Please add this email to the list: '+email)}`;
+  document.getElementById('joinOk').style.display='block';
+  return false;
+}
+
+function sendContact(e){
+  e.preventDefault();
+  const subj = encodeURIComponent(document.getElementById('csubject').value||'Website enquiry');
+  const body = encodeURIComponent(`Name: ${document.getElementById('cname').value}\nEmail: ${document.getElementById('cemail').value}\nPhone: ${document.getElementById('cphone').value}\n\n${document.getElementById('cmessage').value}`);
+  window.location.href = `mailto:hello@jimmyscoffee.ca?subject=${subj}&body=${body}`;
+  document.getElementById('contactOk').style.display='block';
+  return false;
+}
+
+// Reservation flow
+let rStep=1, rTime=null;
+function renderTimes(){
+  const times=["11:00 AM","11:30 AM","12:00 PM","12:30 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","4:30 PM"];
+  document.getElementById('timeGrid').innerHTML = times.map(t=>`<button type="button" onclick="pickTime(this,'${t}')">${t}</button>`).join('');
+}
+function pickTime(btn,t){
+  document.querySelectorAll('.time-grid button').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel'); rTime=t;
+}
+function rsvNext(){
+  if(rStep===1 && !rTime) renderTimes();
+  if(rStep===2 && !rTime){ alert('Please choose a time.'); return; }
+  if(rStep===3){
+    const loc=document.getElementById('rLoc').value;
+    const date=document.getElementById('rDate').value || 'a date to be confirmed';
+    const party=document.getElementById('rParty').value;
+    const first=document.getElementById('rFirst').value||'Guest';
+    const ref='JC-'+Math.random().toString(36).slice(2,8).toUpperCase();
+    document.getElementById('summary').innerHTML = `
+      <div class="summary-row"><span>Location</span><strong>${loc}</strong></div>
+      <div class="summary-row"><span>Date</span><strong>${date}</strong></div>
+      <div class="summary-row"><span>Time</span><strong>${rTime}</strong></div>
+      <div class="summary-row"><span>Party size</span><strong>${party}</strong></div>
+      <div class="summary-row"><span>Name</span><strong>${first} ${document.getElementById('rLast').value}</strong></div>
+      <p style="margin-top:1.2rem">Thanks, ${first} — your request is ready to send.</p>
+      <div class="ref">${ref}</div>
+      <p style="font-size:.88rem;opacity:.75">This confirms your request was drafted, not a guaranteed table — a team member will confirm by email or phone before your visit.</p>`;
+  }
+  if(rStep<4){ rStep++; goToStep(); }
+}
+function rsvBack(){ if(rStep>1){ rStep--; goToStep(); } }
+function goToStep(){
+  document.querySelectorAll('.rsv-step').forEach(s=>s.classList.toggle('active', +s.dataset.step===rStep));
+  document.querySelectorAll('.rsv-steps span').forEach(s=>s.classList.toggle('active', +s.dataset.s<=rStep));
+  document.getElementById('rBack').style.visibility = rStep>1 ? 'visible':'hidden';
+  document.getElementById('rNext').style.display = rStep<4 ? 'inline-block':'none';
+  if(rStep===2) renderTimes();
+}
+goToStep();
+
+// Swipe menu carousel
+(function(){
+  const track = document.getElementById('swipeTrack');
+  if(!track) return;
+  const cards = track.querySelectorAll('.swipe-card');
+  const dotsWrap = document.getElementById('swipeDots');
+  const countEl = document.getElementById('swipeCount');
+  cards.forEach((_,i)=>{
+    const b = document.createElement('button');
+    b.setAttribute('aria-label','Go to slide '+(i+1));
+    if(i===0) b.classList.add('active');
+    b.addEventListener('click', ()=>swipeTo(i));
+    dotsWrap.appendChild(b);
+  });
+  function current(){
+    return Math.round(track.scrollLeft / track.clientWidth);
+  }
+  function updateUI(){
+    const i = Math.min(cards.length-1, Math.max(0, current()));
+    dotsWrap.querySelectorAll('button').forEach((b,bi)=>b.classList.toggle('active', bi===i));
+    countEl.textContent = (i+1)+' / '+cards.length;
+  }
+  window.swipeTo = function(i){
+    if(track.scrollTo) track.scrollTo({left: i*track.clientWidth, behavior:'smooth'});
+    else track.scrollLeft = i*track.clientWidth;
+  };
+  window.swipeGo = function(dir){
+    const i = Math.min(cards.length-1, Math.max(0, current()+dir));
+    swipeTo(i);
+  };
+  let ticking=false;
+  track.addEventListener('scroll', ()=>{
+    if(!ticking){ requestAnimationFrame(()=>{ updateUI(); ticking=false; }); ticking=true; }
+  }, {passive:true});
+  track.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowRight'){ swipeGo(1); e.preventDefault(); }
+    if(e.key==='ArrowLeft'){ swipeGo(-1); e.preventDefault(); }
+  });
+  window.addEventListener('resize', ()=>swipeTo(current()));
+  updateUI();
+})();
+
+// Sticky nav shadow on scroll
+const siteHeader = document.querySelector('header.site');
+window.addEventListener('scroll', ()=>{
+  siteHeader.classList.toggle('scrolled', window.scrollY > 8);
+}, {passive:true});
+
+// Gentle reveal-on-scroll for major sections
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+}
+</script>
+  <button class="lb-next" onclick="lbStep(1)" aria-label="Next photo">&#8594;</button>
+</div>
+</body>
+</html>
