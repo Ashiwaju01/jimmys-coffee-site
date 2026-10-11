@@ -479,6 +479,37 @@ a,button{transition:color .2s ease,background-color .2s ease,border-color .2s ea
 @media(max-width:600px){.hero{min-height:78svh}.hero h1{max-width:9ch}.feed-grid{gap:.55rem}.sec-head{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
 
+
+/* BRAND CORRECTION: signature-lid yellow, espresso and warm café neutrals.
+   Remove the invented ring mark and the previous neon/bright-red treatment. */
+:root{
+  --jc-lime:#E4B64F !important;
+  --jc-red:#8D382D !important;
+  --yellow:#E4B64F !important;
+  --brick:#8D382D !important;
+  --cream:#F3EBDD !important;
+  --paper:#E8DCC8 !important;
+  --ink:#29231D !important;
+  --brown:#5B4030 !important;
+  --line:rgba(41,35,29,.18) !important;
+}
+.brand::before,.foot-brand::before{content:none !important;display:none !important}
+::selection{background:#E4B64F;color:#29231D}
+.hero .cta,.gift .cta{background:#E4B64F !important;border-color:#E4B64F !important;color:#29231D !important}
+.story img,.jimmy img{box-shadow:12px 12px 0 #E4B64F !important}
+.jimmy img{box-shadow:-12px 12px 0 #8D382D !important}
+.gift{background:#30251D !important;color:#F3EBDD !important}
+.gift h2{color:#F3EBDD}
+.jc-marquee{background:#E4B64F !important;color:#29231D !important}
+.jc-marquee .dot{color:#8D382D !important}
+footer{background:#30251D !important;color:#F3EBDD !important}
+footer a:hover{color:#E4B64F !important}
+.hero::before{color:#F3EBDD;letter-spacing:.16em}
+@media(max-width:760px){
+  .story img,.jimmy img{box-shadow:7px 7px 0 #E4B64F !important}
+  .jimmy img{box-shadow:-7px 7px 0 #8D382D !important}
+}
+
 </style>
 </head>
 <body>
