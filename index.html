@@ -444,6 +444,26 @@ footer a:hover{color:var(--yellow)}
   .hero h1{max-width:9ch;font-size:clamp(3rem,12.5vw,5rem)}
 }
 
+/* FINAL HERO VISIBILITY FIX — force content above image/video on every viewport */
+.hero{position:relative!important;isolation:isolate!important;overflow:hidden!important;background:#241a14!important}
+.hero>img,.hero>video{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;z-index:0!important;pointer-events:none!important}
+.hero>img{filter:brightness(.42) saturate(.72)!important}
+.hero>video{filter:brightness(.42) saturate(.72)!important}
+.hero::before{z-index:2!important;pointer-events:none!important}
+.hero::after{content:""!important;position:absolute!important;inset:0!important;height:auto!important;z-index:1!important;pointer-events:none!important;background:linear-gradient(90deg,rgba(16,11,8,.82) 0%,rgba(16,11,8,.64) 55%,rgba(16,11,8,.30) 100%),linear-gradient(0deg,rgba(16,11,8,.62) 0%,rgba(16,11,8,.06) 85%)!important}
+.hero>.hero-inner,.hero .hero-inner{position:relative!important;z-index:5!important;isolation:isolate!important;width:100%!important;max-width:1180px!important;margin:0 auto!important;padding:clamp(3rem,8vh,5.5rem) 24px!important;opacity:1!important;visibility:visible!important;transform:none!important}
+.hero h1,.hero p,.hero .hero-ctas,.hero .hero-ctas a{position:relative!important;z-index:6!important;opacity:1!important;visibility:visible!important;transform:none!important;animation:none!important;mix-blend-mode:normal!important}
+.hero h1{display:block!important;color:#fffaf0!important;text-shadow:0 3px 22px rgba(0,0,0,.8)!important;line-height:.98!important}
+.hero p{display:block!important;color:#fffaf0!important;text-shadow:0 2px 14px rgba(0,0,0,.9)!important;line-height:1.6!important}
+.hero .hero-ctas{display:flex!important;flex-wrap:wrap!important;gap:.75rem!important}
+.hero .hero-ctas a{display:inline-flex!important;align-items:center!important}
+@media(max-width:760px){
+ .hero{min-height:82svh!important;align-items:flex-end!important}
+ .hero>.hero-inner,.hero .hero-inner{padding:4rem 24px 3.25rem!important}
+ .hero h1{font-size:clamp(2.8rem,12vw,4.6rem)!important;max-width:10ch!important}
+ .hero p{font-size:1rem!important;max-width:34ch!important}
+}
+
 </style>
 </head>
 <body>
