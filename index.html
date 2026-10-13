@@ -37,7 +37,7 @@ section{scroll-margin-top:76px}
 /* NAV */
 header.site{position:sticky;top:0;z-index:50;background:var(--cream);border-bottom:1px solid var(--line);transition:box-shadow .25s ease}
 header.site.scrolled{box-shadow:0 4px 18px rgba(0,0,0,.08)}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
@@ -302,7 +302,7 @@ footer{padding:3.5rem 0 2.5rem}
 /* Signature lid motif */
 .lid-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em}
 .lid-badge{position:relative;display:inline-flex;align-items:center;justify-content:center}
-.lid-big{position:absolute;opacity:.08;pointer-events:none;color:var(--yellow)}
+.lid-big{position:absolute;z-index:0;opacity:.035;pointer-events:none;color:var(--yellow)}
 @media (prefers-color-scheme:dark){.lid-big{opacity:.06}}
 :root[data-theme="dark"] .lid-big{opacity:.06}
 .sec-head h2 .lid-icon, h1 .lid-icon, h2 .lid-icon{color:var(--yellow)}
@@ -341,14 +341,14 @@ header.site.scrolled{box-shadow:0 8px 24px rgba(41,35,29,.08)}
 .cta,.geo-btn,.loc-actions .reserve-btn{background:var(--brick);border-color:var(--brick);color:#fff8ed}
 .cta.outline,.loc-actions .dir-btn{background:transparent;color:var(--ink);border-color:var(--ink)}
 .hero{min-height:min(82vh,820px);background:#30251d;isolation:isolate}
-.hero::before{content:"JIMMY'S · TORONTO · SINCE 2009";position:absolute;z-index:3;top:2rem;right:clamp(1rem,4vw,4rem);color:#F3EBDD;font-size:.68rem;letter-spacing:.16em;font-weight:700;writing-mode:vertical-rl;opacity:.9}
-.hero::after{height:58%;background:linear-gradient(0deg,rgba(24,18,13,.78),rgba(24,18,13,.04) 85%);z-index:1}
-.hero img,.hero video{filter:brightness(.72) saturate(.82);transform:scale(1.025);animation:jc-hero-drift 24s ease-in-out infinite alternate}
+.hero::before{content:"JIMMY'S · TORONTO · SINCE 2009";position:absolute;z-index:2;top:2rem;right:clamp(1rem,4vw,4rem);color:#F3EBDD;font-size:.68rem;letter-spacing:.16em;font-weight:700;writing-mode:vertical-rl;opacity:.9;text-shadow:0 2px 12px rgba(0,0,0,.65)}
+.hero::after{inset:0;height:auto;background:linear-gradient(90deg,rgba(20,14,10,.76) 0%,rgba(20,14,10,.52) 48%,rgba(20,14,10,.20) 100%),linear-gradient(0deg,rgba(20,14,10,.62),rgba(20,14,10,.08) 78%);z-index:1}
+.hero img,.hero video{filter:brightness(.66) saturate(.78);transform:scale(1.025);animation:jc-hero-drift 24s ease-in-out infinite alternate}
 .hero video{z-index:0}
 .hero img{z-index:-1}
-.hero-inner{z-index:2;padding:clamp(3rem,8vh,5.5rem) 0}
-.hero h1{max-width:10ch;font-size:clamp(3.2rem,8vw,7rem);line-height:.9;letter-spacing:-.055em;text-wrap:balance;animation:jc-title-in .8s cubic-bezier(.2,.75,.25,1) both}
-.hero p{max-width:34ch;font-size:clamp(1rem,1.4vw,1.2rem);animation:jc-fade-up .7s .12s both}
+.hero-inner{z-index:4;padding:clamp(3rem,8vh,5.5rem) 0;position:relative;isolation:isolate}
+.hero h1{position:relative;max-width:10ch;font-size:clamp(3.2rem,8vw,7rem);line-height:.94;letter-spacing:-.055em;text-wrap:balance;color:#fffaf0;text-shadow:0 3px 18px rgba(0,0,0,.45);animation:jc-title-in .8s cubic-bezier(.2,.75,.25,1) both}
+.hero p{max-width:34ch;font-size:clamp(1rem,1.4vw,1.2rem);color:#fffaf0;text-shadow:0 2px 12px rgba(0,0,0,.55);animation:jc-fade-up .7s .12s both}
 .hero-ctas{animation:jc-fade-up .7s .22s both}
 .hero .cta{background:var(--yellow);color:#29231D;border-color:var(--yellow)}
 .hero .cta.outline{background:rgba(41,35,29,.2);color:#fff8ed;border-color:rgba(255,248,237,.8)}
@@ -427,6 +427,21 @@ footer a:hover{color:var(--yellow)}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+
+/* Text legibility and decorative-layer safeguards */
+.reveal{opacity:1;transform:none}
+.reveal.in{opacity:1;transform:none}
+.reveal .wrap{position:relative;z-index:1}
+.hero{color:#fffaf0}
+.hero::after{pointer-events:none}
+.hero-inner{position:relative;z-index:4;isolation:isolate}
+.hero .hero-ctas{position:relative;z-index:5}
+.hero .cta{box-shadow:0 3px 14px rgba(0,0,0,.16)}
+@media(max-width:760px){
+  .hero::after{background:linear-gradient(90deg,rgba(20,14,10,.72),rgba(20,14,10,.34)),linear-gradient(0deg,rgba(20,14,10,.68),rgba(20,14,10,.12) 82%)}
+  .hero-inner{padding-block:4rem 3.25rem}
+  .hero h1{max-width:9ch;font-size:clamp(3rem,12.5vw,5rem)}
 }
 
 </style>
