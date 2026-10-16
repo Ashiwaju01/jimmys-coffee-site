@@ -11,6 +11,7 @@
 <meta property="og:image" content="images/hero.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#221B12">
+<script>window.JC_BACKEND_URL = ""; window.JC_BACKEND_ANON_KEY = "";</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -799,7 +800,7 @@ footer a:hover{color:var(--yellow)}
       <div class="rsv-step active" data-step="1">
         <h3>1. Choose a location</h3>
         <div class="field"><select id="rLoc"><!--LOCOPTS--></select></div>
-        <div class="field"><label for="rDate">Date</label><input type="date" id="rDate"></div>
+        <div class="field"><label for="rDate">Date</label><input type="date" id="rDate" required></div>
         <div class="field"><label for="rParty">Party size</label><select id="rParty"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6+</option></select></div>
       </div>
 
@@ -810,10 +811,10 @@ footer a:hover{color:var(--yellow)}
 
       <div class="rsv-step" data-step="3">
         <h3>3. Your details</h3>
-        <div class="field"><label for="rFirst">First name</label><input id="rFirst"></div>
-        <div class="field"><label for="rLast">Last name</label><input id="rLast"></div>
-        <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email"></div>
-        <div class="field"><label for="rPhone">Phone</label><input id="rPhone" type="tel"></div>
+        <div class="field"><label for="rFirst">First name</label><input id="rFirst" autocomplete="given-name" required></div>
+        <div class="field"><label for="rLast">Last name</label><input id="rLast" autocomplete="family-name" required></div>
+        <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email" autocomplete="email"></div>
+        <div class="field"><label for="rPhone">Phone</label><input id="rPhone" type="tel" autocomplete="tel"></div>
         <div class="field"><label for="rNote">Special request, occasion, or accessibility need (optional)</label><input id="rNote"></div>
       </div>
 
@@ -1084,20 +1085,43 @@ function filterFaq(){
   document.getElementById('faqEmpty').style.display = any ? 'none':'block';
 }
 
-function joinList(e){
+async function postToJimmyBackend(type, payload){
+  const endpoint=(window.JC_BACKEND_URL||'').trim().replace(/\/$/,'');
+  const key=(window.JC_BACKEND_ANON_KEY||'').trim();
+  if(!endpoint||!key) return {configured:false};
+  const response=await fetch(endpoint+'/functions/v1/submit-request',{method:'POST',headers:{'Content-Type':'application/json','apikey':key,'Authorization':'Bearer '+key},body:JSON.stringify({type,payload})});
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(result.error||'Submission failed. Please try again.');
+  return {configured:true,result};
+}
+function openMailDraft(subject,body){
+  window.location.href='mailto:hello@jimmyscoffee.ca?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+}
+async function joinList(e){
   e.preventDefault();
-  const email = document.getElementById('joinEmail').value;
-  window.location.href = `mailto:hello@jimmyscoffee.ca?subject=${encodeURIComponent('Sign me up')}&body=${encodeURIComponent('Please add this email to the list: '+email)}`;
-  document.getElementById('joinOk').style.display='block';
+  const email=document.getElementById('joinEmail').value.trim(), status=document.getElementById('joinOk'), button=document.querySelector('#joinForm button[type="submit"]');
+  button.disabled=true; button.textContent='Submitting…';
+  try{
+    const result=await postToJimmyBackend('newsletter',{email});
+    if(result.configured) status.textContent='Thanks — your signup request has been received.';
+    else {openMailDraft('Newsletter signup','Please add this email to the Jimmy’s Coffee newsletter: '+email);status.textContent='Your email draft has opened. You are not subscribed until you send it.';}
+    status.style.display='block';
+  }catch(err){status.textContent=err.message+' Your signup was not recorded.';status.style.display='block';}
+  finally{button.disabled=false;button.textContent='Sign me up';}
   return false;
 }
-
-function sendContact(e){
+async function sendContact(e){
   e.preventDefault();
-  const subj = encodeURIComponent(document.getElementById('csubject').value||'Website enquiry');
-  const body = encodeURIComponent(`Name: ${document.getElementById('cname').value}\nEmail: ${document.getElementById('cemail').value}\nPhone: ${document.getElementById('cphone').value}\n\n${document.getElementById('cmessage').value}`);
-  window.location.href = `mailto:hello@jimmyscoffee.ca?subject=${subj}&body=${body}`;
-  document.getElementById('contactOk').style.display='block';
+  const payload={name:document.getElementById('cname').value.trim(),email:document.getElementById('cemail').value.trim(),phone:document.getElementById('cphone').value.trim(),subject:document.getElementById('csubject').value.trim(),message:document.getElementById('cmessage').value.trim()};
+  const status=document.getElementById('contactOk'), button=document.querySelector('.cform button[type="submit"]');
+  button.disabled=true;button.textContent='Sending…';
+  try{
+    const result=await postToJimmyBackend('contact',payload);
+    if(result.configured) status.textContent='Thanks — your message has been received.';
+    else {openMailDraft(payload.subject||'Website enquiry','Name: '+payload.name+'\nEmail: '+payload.email+'\nPhone: '+payload.phone+'\n\n'+payload.message);status.textContent='Your email draft has opened. Your message has not been sent yet.';}
+    status.style.display='block';
+  }catch(err){status.textContent=err.message+' Your message was not recorded.';status.style.display='block';}
+  finally{button.disabled=false;button.textContent='Send message';}
   return false;
 }
 
@@ -1111,27 +1135,37 @@ function pickTime(btn,t){
   document.querySelectorAll('.time-grid button').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel'); rTime=t;
 }
-function rsvNext(){
-  if(rStep===1 && !rTime) renderTimes();
-  if(rStep===2 && !rTime){ alert('Please choose a time.'); return; }
-  if(rStep===3){
-    const loc=document.getElementById('rLoc').value;
-    const date=document.getElementById('rDate').value || 'a date to be confirmed';
-    const party=document.getElementById('rParty').value;
-    const first=document.getElementById('rFirst').value||'Guest';
-    const ref='JC-'+Math.random().toString(36).slice(2,8).toUpperCase();
-    document.getElementById('summary').innerHTML = `
-      <div class="summary-row"><span>Location</span><strong>${loc}</strong></div>
-      <div class="summary-row"><span>Date</span><strong>${date}</strong></div>
-      <div class="summary-row"><span>Time</span><strong>${rTime}</strong></div>
-      <div class="summary-row"><span>Party size</span><strong>${party}</strong></div>
-      <div class="summary-row"><span>Name</span><strong>${first} ${document.getElementById('rLast').value}</strong></div>
-      <p style="margin-top:1.2rem">Thanks, ${first} — your request is ready to send.</p>
-      <div class="ref">${ref}</div>
-      <p style="font-size:.88rem;opacity:.75">This confirms your request was drafted, not a guaranteed table — a team member will confirm by email or phone before your visit.</p>`;
+async function rsvNext(){
+  if(rStep===1){
+    const input=document.getElementById('rDate');
+    if(!input.value){alert('Please choose a date.');input.focus();return;}
+    const chosen=new Date(input.value+'T00:00:00'), today=new Date();today.setHours(0,0,0,0);
+    if(chosen<today){alert('Please choose today or a future date.');input.focus();return;}
   }
-  if(rStep<4){ rStep++; goToStep(); }
+  if(rStep===2&&!rTime){alert('Please choose a time.');return;}
+  if(rStep===3){
+    const loc=document.getElementById('rLoc').value,date=document.getElementById('rDate').value,party=document.getElementById('rParty').value;
+    const first=document.getElementById('rFirst').value.trim(),last=document.getElementById('rLast').value.trim(),email=document.getElementById('rEmail').value.trim(),phone=document.getElementById('rPhone').value.trim(),note=document.getElementById('rNote').value.trim();
+    if(!first||!last||(!email&&!phone)){alert('Enter your first and last name, plus an email or phone number.');return;}
+    const button=document.getElementById('rNext'),summary=document.getElementById('summary');
+    button.disabled=true;button.textContent='Submitting…';
+    try{
+      const response=await postToJimmyBackend('reservation',{location:loc,date,time:rTime,party_size:party,first_name:first,last_name:last,email,phone,note});
+      if(response.configured){
+        const ref=response.result.reference||'Request received';
+        summary.innerHTML='<div class="summary-row"><span>Location</span><strong>'+escapeHtml(loc)+'</strong></div><div class="summary-row"><span>Date</span><strong>'+escapeHtml(date)+'</strong></div><div class="summary-row"><span>Time</span><strong>'+escapeHtml(rTime)+'</strong></div><div class="summary-row"><span>Party size</span><strong>'+escapeHtml(party)+'</strong></div><div class="summary-row"><span>Name</span><strong>'+escapeHtml(first+' '+last)+'</strong></div><p>Thanks, '+escapeHtml(first)+' — your request has been received.</p><div class="ref">'+escapeHtml(ref)+'</div><p style="font-size:.88rem;opacity:.75">This is a request, not a confirmed table. The café team must confirm availability separately.</p>';
+      }else{
+        openMailDraft('Table request — Jimmy’s Coffee','Location: '+loc+'\nDate: '+date+'\nTime: '+rTime+'\nParty size: '+party+'\nName: '+first+' '+last+'\nEmail: '+email+'\nPhone: '+phone+'\nSpecial request: '+note+'\n\nPlease confirm availability for this table request.');
+        summary.innerHTML='<p><strong>Your reservation request has not been submitted yet.</strong></p><p>Your email app should open with a draft. Send that email to deliver your request. No booking reference has been issued and no table is reserved.</p>';
+      }
+      rStep++;goToStep();
+    }catch(err){alert(err.message+' Your reservation request was not recorded. Please try again.');}
+    finally{button.disabled=false;button.textContent='Continue';}
+    return;
+  }
+  if(rStep<4){rStep++;goToStep();}
 }
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
 function rsvBack(){ if(rStep>1){ rStep--; goToStep(); } }
 function goToStep(){
   document.querySelectorAll('.rsv-step').forEach(s=>s.classList.toggle('active', +s.dataset.step===rStep));
