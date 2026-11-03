@@ -1,26 +1,28 @@
-# Jimmy's Coffee backend setup
+# Jimmy's Coffee backend
 
-The public website is hosted on GitHub Pages, which cannot run server-side code. The repository now includes a Supabase Edge Function and database schema for storing contact messages, reservation requests, and newsletter signup requests.
+The live website is connected to a dedicated Supabase project. The project is separate from Rooms Coffee.
 
-## Important status
+## Deployment record
 
-The live page is deliberately configured with empty backend values in `index.html`. Until a dedicated Jimmy's Coffee Supabase project is selected and configured, forms use a clearly labelled email-draft fallback. Drafting an email does **not** submit it, subscribe someone, or reserve a table.
+- Supabase project: `fvrdqmkoicunwaqmonyn`
+- Region: Canada Central (`ca-central-1`)
+- Website: GitHub Pages
+- Edge Function: `submit-request` (active)
+- Public browser configuration: set in `index.html` using the project's publishable key
+- Database migration: applied successfully
+- Tables verified: `contact_requests`, `reservation_requests`, and `newsletter_signups`
+- Row Level Security: enabled on all three tables; direct public table access revoked
 
-## Setup
+The newsletter, contact, and reservation endpoints each returned HTTP 201 during live API testing. Each test record was verified in its corresponding table and then deleted. The live GitHub Pages HTML was also checked to confirm it contains the correct backend URL and client configuration.
 
-1. Create/use a **dedicated Jimmy's Coffee Supabase project**. Do not reuse an unrelated client project.
-2. In Supabase SQL Editor, run `supabase/schema.sql`.
-3. Deploy `supabase/functions/submit-request/index.ts` as an Edge Function named `submit-request`. Supabase provides `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to deployed functions; keep the service-role key server-side only.
-4. In `index.html`, set `window.JC_BACKEND_URL` to the project API URL and `window.JC_BACKEND_ANON_KEY` to that project's publishable/anon key. The public key is expected to be exposed in a browser; the service-role key must never be.
-5. Test each form with a real email/phone and verify rows appear in the correct tables.
-6. Add an email delivery provider (for example, Resend) and secrets to the Edge Function if the café team needs automatic email alerts. This initial function stores requests in Supabase; it does not yet send notification emails.
-7. Newsletter rows are saved as `pending`, not automatically subscribed. Add double opt-in and unsubscribe support before sending marketing email.
-8. Reservation requests are saved as `pending`; they are not confirmed bookings. A staff workflow must confirm availability and update the status.
+## Form behavior and remaining operational setup
 
-## Tables
+- Contact messages are stored in `contact_requests`. Automatic staff email alerts are not configured yet.
+- Reservation requests are stored in `reservation_requests` with a server-generated reference and `pending` status. They are requests, not confirmed bookings; staff must check availability and confirm them.
+- Newsletter signups are stored in `newsletter_signups` as `pending`. Double opt-in and unsubscribe support must be implemented before sending marketing email.
+- Add a transactional email provider (for example, Resend) and its server-side API secret if the café team needs automatic notifications or confirmation emails.
+- The repository's GitHub Actions deployment workflow requires repository secrets `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_ID` for future automated deployments. The initial database and Edge Function deployment was completed directly in Supabase.
 
-- `contact_requests`: enquiries from the contact form.
-- `reservation_requests`: table requests, with server-generated references and pending status.
-- `newsletter_signups`: email signups pending confirmation.
+## Security notes
 
-RLS is enabled and direct public table access is revoked. Writes are performed by the Edge Function using its server-side service role key.
+The publishable key is intended to be visible in the browser. The service-role key remains server-side in Supabase and must never be added to `index.html` or committed to GitHub. Database writes are performed by the Edge Function.
