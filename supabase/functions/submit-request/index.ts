@@ -89,7 +89,8 @@ Deno.serve(async (req) => {
   const partySize = Number(str(p.party_size, 3));
   const first_name = str(p.first_name, 100), last_name = str(p.last_name, 100);
   const email = str(p.email, 254).toLowerCase(), phone = str(p.phone, 50), note = str(p.note, 1000);
-  const dateIsReal = /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date + "T00:00:00Z"));
+  const parsedDate = new Date(date + "T00:00:00Z");
+  const dateIsReal = /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(parsedDate.getTime()) && parsedDate.toISOString().slice(0, 10) === date;
   if (!location || !dateIsReal || !time || !Number.isInteger(partySize) || partySize < 1 || partySize > 20
       || !first_name || !last_name || (!emailOk(email) && !phone)) {
     return json({ error: "Check your reservation details and provide a valid email or phone number." }, 400);
