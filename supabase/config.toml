@@ -1,4 +1,4 @@
-project_id = "jimmys-coffee"
+project_id = "fvrdqmkoicunwaqmonyn"
 
 [functions.submit-request]
 verify_jwt = false
