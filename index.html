@@ -465,6 +465,28 @@ footer a:hover{color:var(--yellow)}
  .hero p{font-size:1rem!important;max-width:34ch!important}
 }
 
+
+/* HERO LEGIBILITY FIX — keep the photography, strengthen contrast behind all hero content */
+.hero{background:#21170f;isolation:isolate}
+.hero img,.hero video{z-index:0;filter:brightness(.48) saturate(.78)}
+.hero::after{
+  inset:0;height:auto;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(18,12,8,.82) 0%,rgba(18,12,8,.66) 42%,rgba(18,12,8,.34) 76%,rgba(18,12,8,.20) 100%),
+    linear-gradient(0deg,rgba(18,12,8,.58) 0%,rgba(18,12,8,.08) 75%);
+}
+.hero-inner{z-index:4;position:relative;color:#fffaf0}
+.hero h1{color:#fffaf0;text-shadow:0 3px 22px rgba(0,0,0,.72)}
+.hero p{color:#fffaf0;text-shadow:0 2px 14px rgba(0,0,0,.8)}
+.hero .cta.outline{background:rgba(18,12,8,.58);color:#fff;border-color:rgba(255,255,255,.9);text-shadow:none}
+.hero .cta.outline:hover{background:rgba(18,12,8,.82)}
+@media (max-width:600px){
+  .hero::after{
+    background:linear-gradient(90deg,rgba(18,12,8,.76),rgba(18,12,8,.52)),
+      linear-gradient(0deg,rgba(18,12,8,.64),rgba(18,12,8,.18));
+  }
+  .hero-inner{padding-top:4.5rem;padding-bottom:3rem}
+}
 </style>
 </head>
 <body>
