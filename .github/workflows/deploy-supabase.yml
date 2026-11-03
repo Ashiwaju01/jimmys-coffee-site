@@ -28,5 +28,7 @@ jobs:
           test -n "$SUPABASE_PROJECT_ID" || (echo "Missing SUPABASE_PROJECT_ID repository secret" && exit 1)
       - name: Apply database migrations
         run: supabase db push --yes --project-ref "$SUPABASE_PROJECT_ID"
-      - name: Deploy Edge Function
+      - name: Deploy public form function
         run: supabase functions deploy submit-request --use-api --project-ref "$SUPABASE_PROJECT_ID"
+      - name: Deploy authenticated staff API
+        run: supabase functions deploy staff-admin --use-api --project-ref "$SUPABASE_PROJECT_ID"
