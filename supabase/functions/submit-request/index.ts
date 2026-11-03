@@ -25,7 +25,7 @@ Deno.serve(async (req) => {
       status: 403, headers: { "Content-Type": "application/json", "Vary": "Origin" },
     });
   }
-  if (req.method === "OPTIONS") return new Response("ok", { status: 204, headers: corsHeaders });
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed." }, 405);
   if (Number(req.headers.get("content-length") || "0") > 12000) return json({ error: "Request is too large." }, 413);
 
