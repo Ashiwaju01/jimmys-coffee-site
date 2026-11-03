@@ -13,7 +13,7 @@ The live website is connected to a dedicated Supabase project. The project is se
 - Tables verified: `contact_requests`, `reservation_requests`, and `newsletter_signups`
 - Row Level Security: enabled on all three tables; direct public table access revoked
 
-The newsletter, contact, and reservation endpoints each returned HTTP 201 during live API testing. Each test record was verified in its corresponding table and then deleted. The live GitHub Pages HTML was also checked to confirm it contains the correct backend URL and client configuration. A database-backed limit now caps each form type at eight submissions per 15-minute window per client IP; only a SHA-256 hash is stored. The endpoint accepts browser requests only from the live GitHub Pages origin and rejects oversized request bodies.
+The newsletter, contact, and reservation endpoints each returned HTTP 201 during live API testing. Each test record was verified in its corresponding table and then deleted. Additional live checks passed: allowed-origin preflight returned 204, an unapproved origin returned 403, oversized input returned 413, and the ninth newsletter request in a 15-minute window returned 429. The live GitHub Pages HTML was also checked to confirm it contains the correct backend URL and client configuration. A database-backed limit now caps each form type at eight submissions per 15-minute window per client IP; only a SHA-256 hash is stored. The endpoint accepts browser requests only from the live GitHub Pages origin and rejects oversized request bodies.
 
 ## Form behavior and remaining operational setup
 
@@ -25,4 +25,4 @@ The newsletter, contact, and reservation endpoints each returned HTTP 201 during
 
 ## Security notes
 
-The publishable key is intended to be visible in the browser. The service-role key remains server-side in Supabase and must never be added to `index.html` or committed to GitHub. Database writes are performed by the Edge Function. The new `submission_rate_limits` table has RLS enabled with no client policies; the rate-limit RPC is executable only by `service_role`. The Edge Function CORS allow-list is restricted to `https://ashiwaju01.github.io`.
+The publishable key is intended to be visible in the browser. The service-role key remains server-side in Supabase and must never be added to `index.html` or committed to GitHub. Database writes are performed by the Edge Function. The new `submission_rate_limits` table has RLS enabled with no client policies; the rate-limit RPC is executable only by `service_role`. The Edge Function CORS allow-list is restricted to `https://ashiwaju01.github.io`. Explicit deny-all policies are in place for `anon` and `authenticated` on all four tables, while the server-side `service_role` can perform the required writes. Supabase security and performance advisors both return no findings.
