@@ -2,3 +2,6 @@ project_id = "fvrdqmkoicunwaqmonyn"
 
 [functions.submit-request]
 verify_jwt = false
+
+[functions.staff-admin]
+verify_jwt = true
