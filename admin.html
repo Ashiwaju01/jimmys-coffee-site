@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#221B12">
+<title>Jimmy's Coffee | Staff Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{color-scheme:light;--ink:#241d15;--paper:#fbf6ec;--cream:#f1e7d6;--red:#a83d2d;--gold:#e9b33d;--line:#dfd3c1}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--ink);color:#fff;padding:22px max(20px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font:600 22px Georgia,serif}header small{display:block;color:#d9cdbb;font:12px system-ui}
+main{max-width:1180px;margin:34px auto;padding:0 20px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;box-shadow:0 8px 28px #3b2b1710}
+h1,h2{font-family:Georgia,serif;font-weight:500}h1{font-size:32px;margin:0 0 8px}h2{font-size:23px;margin:0}
+.muted{color:#776c5c}.hidden{display:none!important}label{display:block;font-weight:600;margin:14px 0 6px}
+input{width:100%;padding:13px;border:1px solid #c9bba7;border-radius:6px;background:#fff;font:inherit}
+button,select{font:inherit;border-radius:6px;border:1px solid var(--ink);padding:10px 14px;cursor:pointer}
+button.primary{background:var(--ink);color:#fff}button.ghost{background:transparent;color:inherit;border-color:var(--line)}
+button:disabled{opacity:.5;cursor:wait}.login{max-width:440px;margin:9vh auto}.error{color:#a32620;margin-top:12px}.success{color:#28643b}
+.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.stat{background:#f4ecdf;border:1px solid var(--line);border-radius:8px;padding:15px}.stat strong{font-size:26px;display:block}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.tabs button[aria-pressed=true]{background:var(--ink);color:#fff}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0}
+.records{display:grid;gap:12px}.record{background:#fff;border:1px solid var(--line);border-radius:9px;padding:17px}
+.record-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.record h3{margin:0 0 5px;font:600 17px Georgia,serif}
+.record p{margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}.meta{font-size:13px;color:#786d5e}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.actions select{background:#fff}
+.pill{display:inline-block;border-radius:99px;padding:3px 9px;background:#efe5d4;font-size:12px;font-weight:700}
+#notice{margin:12px 0}.empty{padding:35px;text-align:center;color:#766b5c;border:1px dashed var(--line);border-radius:8px}
+@media(max-width:640px){main{margin:18px auto}.panel{padding:18px}.stats{grid-template-columns:1fr 1fr}.record-head{display:block}header{padding:16px 20px}}
+</style>
+</head>
+<body>
+<header><div class="brand">Jimmy's Coffee <small>Staff workspace · Toronto</small></div><button id="signout" class="ghost hidden">Sign out</button></header>
+<main>
+<section id="login" class="panel login"><h1>Staff sign in</h1><p class="muted">This workspace is restricted to authorised Jimmy's Coffee staff.</p>
+<form id="loginForm"><label for="email">Work email</label><input id="email" type="email" autocomplete="username" required>
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
+<div style="margin-top:18px"><button class="primary" type="submit">Sign in securely</button></div></form><p id="loginError" class="error" role="alert"></p></section>
+<section id="workspace" class="hidden">
+<div class="topline"><div><h1>Staff inbox</h1><p class="muted">Manage incoming reservations, customer messages and newsletter consent.</p></div><button id="refresh" class="primary">Refresh inbox</button></div>
+<div id="notice" role="status" class="muted"></div>
+<div class="stats"><div class="stat"><span class="muted">Reservations awaiting action</span><strong id="pendingReservations">—</strong></div><div class="stat"><span class="muted">Open customer messages</span><strong id="openContacts">—</strong></div><div class="stat"><span class="muted">Pending newsletter consent</span><strong id="pendingNews">—</strong></div></div>
+<div class="panel"><div class="tabs" role="group" aria-label="Inbox categories">
+<button data-tab="reservations" aria-pressed="true">Reservations</button><button data-tab="contacts" aria-pressed="false">Contact messages</button><button data-tab="newsletter" aria-pressed="false">Newsletter</button></div>
+<div class="toolbar"><h2 id="sectionTitle">Reservations</h2><span id="lastUpdated" class="meta"></span></div><div id="records" class="records" aria-live="polite"></div></div>
+</section>
+</main>
+<script>
+(() => {
+const URL="https://fvrdqmkoicunwaqmonyn.supabase.co";
+const KEY="sb_publishable_Gqg_Vq82A5qvGZguyRKLfw_IlC52qLa";
+const client=window.supabase.createClient(URL,KEY);
+const $=id=>document.getElementById(id);
+let currentTab="reservations", inbox={reservations:[],contacts:[],newsletter:[]};
+const titles={reservations:"Reservations",contacts:"Contact messages",newsletter:"Newsletter signups"};
+const statuses={reservations:["pending","confirmed","declined","cancelled"],contacts:["new","in_progress","closed"],newsletter:["pending","subscribed","unsubscribed"]};
+const tableFor={reservations:"reservation_requests",contacts:"contact_requests",newsletter:"newsletter_signups"};
+function safe(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function date(v){if(!v)return "—";const d=new Date(v);return Number.isNaN(d.getTime())?safe(v):d.toLocaleString();}
+function setNotice(msg,kind="muted"){$("notice").className=kind;$("notice").textContent=msg;}
+async function api(payload){const {data,error}=await client.functions.invoke("staff-admin",{body:payload});if(error)throw error;if(data?.error)throw new Error(data.error);return data;}
+async function load(){setNotice("Loading records…");$("records").innerHTML='<div class="empty">Loading…</div>';try{inbox=await api({action:"list"});$("pendingReservations").textContent=inbox.reservations.filter(x=>x.status==="pending").length;$("openContacts").textContent=inbox.contacts.filter(x=>x.status!=="closed").length;$("pendingNews").textContent=inbox.newsletter.filter(x=>x.status==="pending").length;$("lastUpdated").textContent="Updated "+date(inbox.fetched_at);render();setNotice("Inbox is up to date.","success");}catch(e){setNotice(e.message||"Could not load the inbox.","error");$("records").innerHTML='<div class="empty">Unable to load records. Check your session and access.</div>';}}
+function render(){const rows=inbox[currentTab]||[];$("sectionTitle").textContent=titles[currentTab];if(!rows.length){$("records").innerHTML='<div class="empty">No records in this section yet.</div>';return;}
+$("records").innerHTML=rows.map(r=>{let title,detail,meta;
+if(currentTab==="reservations"){title=(r.first_name+" "+r.last_name).trim()+" · "+r.reference;detail='<b>'+safe(r.location)+'</b><br>'+safe(r.requested_date)+' at '+safe(r.requested_time)+' · Party of '+safe(r.party_size)+(r.email?'<br>'+safe(r.email):'')+(r.phone?'<br>'+safe(r.phone):'')+(r.note?'<p>'+safe(r.note)+'</p>':'');meta="Received "+date(r.created_at);}
+else if(currentTab==="contacts"){title=r.name+" · "+r.subject;detail=safe(r.email)+(r.phone?'<br>'+safe(r.phone):'')+'<p>'+safe(r.message)+'</p>';meta="Received "+date(r.created_at);}
+else{title=r.email;detail="Consent recorded: "+date(r.consented_at);meta="Newsletter status";}
+const opts=statuses[currentTab].map(s=>'<option value="'+s+'" '+(r.status===s?'selected':'')+'>'+s.replace("_"," ")+'</option>').join("");
+return '<article class="record"><div class="record-head"><div><h3>'+safe(title)+'</h3><div class="meta">'+safe(meta)+'</div></div><span class="pill">'+safe(r.status)+'</span></div><p>'+detail+'</p><div class="actions"><label style="margin:0">Status <select data-id="'+safe(r.id)+'" class="status">'+opts+'</select></label><button class="primary save" data-id="'+safe(r.id)+'">Save status</button></div></article>';
+}).join("");
+}
+$("loginForm").addEventListener("submit",async e=>{e.preventDefault();$("loginError").textContent="";const b=e.submitter;b.disabled=true;try{const {error}=await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)throw error;await showWorkspace();}catch(err){$("loginError").textContent=err.message||"Sign-in failed.";}finally{b.disabled=false;}});
+async function showWorkspace(){const {data:{user}}=await client.auth.getUser();if(!user){$("login").classList.remove("hidden");$("workspace").classList.add("hidden");$("signout").classList.add("hidden");return;}
+$("login").classList.add("hidden");$("workspace").classList.remove("hidden");$("signout").classList.remove("hidden");await load();}
+$("signout").addEventListener("click",async()=>{await client.auth.signOut();showWorkspace();});
+$("refresh").addEventListener("click",load);
+document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{currentTab=b.dataset.tab;document.querySelectorAll("[data-tab]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render();}));
+$("records").addEventListener("click",async e=>{const b=e.target.closest(".save");if(!b)return;const select=$("records").querySelector('select[data-id="'+b.dataset.id+'"]');b.disabled=true;try{await api({action:"update",table:tableFor[currentTab],id:b.dataset.id,status:select.value});setNotice("Record status updated.","success");await load();}catch(err){setNotice(err.message||"Update failed.","error");}finally{b.disabled=false;}});
+client.auth.onAuthStateChange((_event,session)=>{if(session)showWorkspace();else{$("login").classList.remove("hidden");$("workspace").classList.add("hidden");$("signout").classList.add("hidden");}});
+client.auth.getSession().then(({data})=>{if(data.session)showWorkspace();});
+})();
+</script>
+</body></html>
