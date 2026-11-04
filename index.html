@@ -515,6 +515,31 @@ header.site .navright .cta:not(.outline){
   filter:brightness(.62) saturate(.88)!important;
 }
 
+
+/* Unified 3-second motion system — hero video intentionally excluded */
+.jc-motion-item{
+  opacity:0;
+  transform:translate3d(0,22px,0);
+  transition:opacity 3s cubic-bezier(.22,1,.36,1),transform 3s cubic-bezier(.22,1,.36,1);
+  transition-delay:var(--jc-motion-delay,0ms);
+  will-change:opacity,transform;
+}
+.jc-motion-item.jc-motion-in{opacity:1;transform:translate3d(0,0,0)}
+.prod .swatch img,.bean img,.menu-item .left img,.feed-tile img,.loc-photo img{
+  transition:transform 3s cubic-bezier(.22,1,.36,1),filter 3s cubic-bezier(.22,1,.36,1);
+}
+.prod:hover .swatch img,.bean:hover img{transform:scale(1.035)}
+.menu-item{transition:transform 3s cubic-bezier(.22,1,.36,1),border-color 3s cubic-bezier(.22,1,.36,1)}
+.menu-item:hover{transform:translateX(4px);border-color:var(--brick)}
+.tier,.faq-item,.cta,.loc-actions a,.geo-btn{
+  transition-duration:3s;
+  transition-timing-function:cubic-bezier(.22,1,.36,1);
+}
+@media(prefers-reduced-motion:reduce){
+  .jc-motion-item{opacity:1!important;transform:none!important;transition:none!important}
+  .prod .swatch img,.bean img,.menu-item,.tier,.faq-item,.cta,.loc-actions a,.geo-btn{transition:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -1319,6 +1344,40 @@ if ('IntersectionObserver' in window) {
     marquee.addEventListener('mouseenter',()=>{const track=marquee.querySelector('.jc-marquee-track');if(track)track.style.animationPlayState='paused';});
     marquee.addEventListener('mouseleave',()=>{const track=marquee.querySelector('.jc-marquee-track');if(track)track.style.animationPlayState='running';});
   }
+})();
+
+
+// Unified reveal choreography for sections, cards, menu items and products.
+// The hero and its video are deliberately not selected or modified.
+(function(){
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const selector='h2,h3,h4,p,blockquote,.eyebrow,.sec-head,.story-grid>*,.jimmy-grid>*,.loc,.feed-tile,.menu-cat,.menu-item,.bean,.prod,.tier,.ev-hero,.faq-item,.map-wrap,.rsv-box,.contact-grid>* ,.gift-inner>* ,.foot-grid>*';
+  const sections=[...document.querySelectorAll('main section.reveal')];
+  if(reduce){return;}
+  const items=[];
+  sections.forEach(section=>{
+    const found=[...section.querySelectorAll(selector)];
+    const unique=[...new Set(found)].filter(el=>!el.closest('.hero'));
+    unique.forEach((el,index)=>{
+      if(el.classList.contains('jc-motion-item')) return;
+      el.classList.add('jc-motion-item');
+      el.style.setProperty('--jc-motion-delay',Math.min(index,7)*85+'ms');
+      items.push(el);
+    });
+  });
+  if(!('IntersectionObserver' in window)){
+    items.forEach(el=>el.classList.add('jc-motion-in'));
+    return;
+  }
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('jc-motion-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -4% 0px'});
+  items.forEach(el=>observer.observe(el));
 })();
 
 </script>
