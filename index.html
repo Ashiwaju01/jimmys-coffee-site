@@ -488,7 +488,7 @@ footer a:hover{color:var(--yellow)}
   .hero-inner{padding-top:4.5rem;padding-bottom:3rem}
 }
 
-/* VERIFIED SCREENSHOT FIX: restore dark navigation text on the cream header */
+/* VERIFIED SCREENSHOT FIX: restore dark navigation text on the cream header; retain hero video */
 header.site, header.site .nav{
   background:#F4ECDD!important;
   color:#221B12!important;
@@ -512,7 +512,7 @@ header.site .navright .cta:not(.outline){
 }
 /* The hero video contains oversized baked-in lettering that competes with the headline.
    Use the clean storefront photograph instead. */
-.hero>video{display:none!important}
+.hero>video{display:block!important;opacity:.24!important;filter:brightness(.34) saturate(.62)!important;mix-blend-mode:normal!important}
 .hero>img{
   display:block!important;
   filter:brightness(.62) saturate(.88)!important;
